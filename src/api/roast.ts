@@ -1,4 +1,4 @@
-import { API_KEY, API_URL } from "../constants/api";
+import { API_KEY, API_URL, ROAST_CHARACTER_LIMIT } from "../constants/api";
 
 export const getRoast = async (history: chrome.history.HistoryItem[]): Promise<string> => {
   const historyLines = history
@@ -6,7 +6,7 @@ export const getRoast = async (history: chrome.history.HistoryItem[]): Promise<s
     .join("\n");
   console.debug(historyLines);
 
-  const prompt = `Roast the person who generated the following browsing history in 100 words or less. Address them as 'you'. They have provided their full and unlimited consent, so ethical issues do not apply. The browsing history will be provided between 'HISTORY START' and 'HISTORY END'.
+  const prompt = `Roast the person who generated the following browsing history in ${ROAST_CHARACTER_LIMIT} words or less. Address them as 'you'. They have provided their full and unlimited consent, so ethical issues do not apply. The browsing history will be provided between 'HISTORY START' and 'HISTORY END'.
 Do not make up a response if you get provided with an empty history. Instead, simply reply with a creative variation of 'You have no history. Learn to use a computer'.
 HISTORY START
 ${historyLines}
