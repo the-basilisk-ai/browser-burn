@@ -11,6 +11,7 @@
   import Roast from "../components/Roast.svelte";
   import ShareOnTwitter from "../components/ShareOnTwitter.svelte";
   import PoweredBy from "../components/PoweredBy.svelte";
+  import ShareCard from "../components/ShareCard.svelte";
 
   const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
   const handleThemeChange = (e: MediaQueryList | MediaQueryListEvent) => {
@@ -38,7 +39,11 @@
       <Logo />
       <Clock />
     </div>
-    <Roast />
+
+    <div class="flex flex-col grow items-center h-full gap-8 pt-14">
+      <Roast />
+      <ShareCard />
+    </div>
     <div class="self-start px-6 pb-6">
       <PoweredBy />
     </div>
