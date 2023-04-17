@@ -9,7 +9,6 @@
 
   let themeValue: Theme;
   theme.subscribe((value) => (themeValue = value));
-  console.log(themeValue);
 
   const loadingMessage =
     loadingMessages[Math.floor(Math.random() * loadingMessages.length)];

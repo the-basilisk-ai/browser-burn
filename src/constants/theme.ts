@@ -6,7 +6,6 @@ export const LIGHT_MODE = 'light' as const;
 export type ACTIVE_MODE = typeof DARK_MODE | typeof LIGHT_MODE;
 
 const twConfig = resolveConfig(tailwindConfig)
-console.log(twConfig);
 
 export interface Theme {
   key: ACTIVE_MODE;
