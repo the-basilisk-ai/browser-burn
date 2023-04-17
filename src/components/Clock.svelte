@@ -1,7 +1,12 @@
 <script lang="ts">
+  import type { Theme } from "../constants/theme";
+  import { theme } from "../stores/theme";
   import { onMount, onDestroy } from "svelte";
 
   export let use24h: boolean = false;
+
+  let themeValue: Theme;
+  theme.subscribe((value) => (themeValue = value));
 
   const padZero = (num: number) => (num < 10 ? `0${num}` : num);
 
@@ -21,6 +26,6 @@
   });
 </script>
 
-<div class="text-[2.625rem] font-bold text-[#475284]">
+<div class="text-[2.625rem] font-bold" style:color={themeValue.textBrand}>
   {hours}:{minutes}
 </div>

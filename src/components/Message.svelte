@@ -1,12 +1,11 @@
 <script lang="ts">
-  import clsx from "clsx";
-  export let text: string;
-  export let isError: boolean = false;
+  import type { Theme } from "../constants/theme";
+  import { theme } from "../stores/theme";
 
-  const colorClass = isError ? "text-red-500" : "text-blue-200";
+  export let text: string;
 </script>
 
-<h2 class={clsx("font-serif font-medium text-zinc-900 text-2xl", colorClass)}>
+<h2 class="font-serif font-medium text-2xl">
   {text}
 </h2>
 

@@ -1,17 +1,35 @@
-<script>
+<script lang="ts">
   import "@fontsource/inter/400.css";
   import "@fontsource/inter/600.css";
   import "@fontsource/cormorant-garamond/latin-500.css";
+  import { onMount, onDestroy } from "svelte";
+
+  import { DARK_MODE, LIGHT_MODE, type Theme } from "../constants/theme";
+  import { theme } from "../stores/theme";
   import Logo from "../components/Logo.svelte";
   import Clock from "../components/Clock.svelte";
   import Roast from "../components/Roast.svelte";
   import ShareOnTwitter from "../components/ShareOnTwitter.svelte";
   import PoweredBy from "../components/PoweredBy.svelte";
+
+  const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
+  const handleThemeChange = (e: MediaQueryList | MediaQueryListEvent) => {
+    theme.set(e.matches ? DARK_MODE : LIGHT_MODE);
+  };
+  // Set theme, set up change listener, and clean up listener on destroy
+  handleThemeChange(darkModeQuery);
+  onMount(() => darkModeQuery.addEventListener("change", handleThemeChange));
+  onDestroy(() =>
+    darkModeQuery.removeEventListener("change", handleThemeChange)
+  );
+
+  let themeValue: Theme;
+  theme.subscribe((value) => (themeValue = value));
 </script>
 
 <div
   class="flex flex-col items-center min-h-screen"
-  style="background: linear-gradient(90deg, #FDFCCE 0%, #CFEBFC 100%);"
+  style={`background: linear-gradient(90deg, ${themeValue.bgGradientFrom} 0%, ${themeValue.bgGradientTo} 100%);`}
 >
   <div
     class="flex flex-col items-center w-full max-w-screen-2xl min-h-screen bg-gradient text-zinc-800"

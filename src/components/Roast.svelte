@@ -1,9 +1,15 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import loadingMessages from "../constants/loadingMessages";
+  import type { Theme } from "../constants/theme";
+  import { theme } from "../stores/theme";
   import Loading from "./Loading.svelte";
   import Message from "./Message.svelte";
   import { getRoast } from "../api/roast";
-  import loadingMessages from "../constants/loadingMessages";
+
+  let themeValue: Theme;
+  theme.subscribe((value) => (themeValue = value));
+  console.log(themeValue);
 
   const loadingMessage =
     loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
@@ -24,7 +30,10 @@
     const startTime = new Date(Date.now() - hours * 60 * 60 * 1000).getTime();
     const endTime = Date.now();
 
-    chrome.history.search({ text: "", startTime, endTime }, callback);
+    chrome.history.search(
+      { text: "", startTime, endTime, maxResults: 50 },
+      callback
+    );
   };
 
   async function onHistoryResults(history: chrome.history.HistoryItem[]) {
@@ -39,12 +48,16 @@
   }
 </script>
 
-<div class="w-7/12 max-w-7xl p-5 rounded-[10px] bg-white">
+<div
+  class="w-7/12 max-w-7xl p-5 rounded-[10px]"
+  style:background-color={themeValue.bgRoast}
+  style:color={themeValue.textRoast}
+>
   {#if isLoading}
-    Loading...
+    <p>Loading...</p>
     <!-- <Loading message={loadingMessage} /> -->
   {:else if error}
-    <Message text={error} isError />
+    <Message text={error} />
   {:else}
     <Message text={roast} />
   {/if}
