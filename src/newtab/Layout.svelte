@@ -1,6 +1,7 @@
 <script>
-  import "@fontsource/inter";
-  import "@fontsource/cormorant-garamond";
+  import "@fontsource/inter/400.css";
+  import "@fontsource/inter/600.css";
+  import "@fontsource/cormorant-garamond/latin-500.css";
   import Logo from "../components/Logo.svelte";
   import Clock from "../components/Clock.svelte";
   import Roast from "../components/Roast.svelte";
