@@ -38,10 +38,7 @@
       <Logo />
       <Clock />
     </div>
-    <div class="flex flex-col grow items-center h-full gap-8 pt-14">
-      <Roast />
-      <ShareOnTwitter />
-    </div>
+    <Roast />
     <div class="self-start px-6 pb-6">
       <PoweredBy />
     </div>

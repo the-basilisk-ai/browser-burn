@@ -33,12 +33,10 @@ HISTORY END`;
 
   if (response.ok) {
     const json = await response.json();
-    console.debug(json);
+    const roast = json.choices[0].message.content;
+    console.debug(roast);
 
-    const responseContent = json.choices[0].message.content;
-    console.debug(responseContent);
-
-    return responseContent;
+    return roast;
   } else {
     console.error(await response.text());
     throw new Error('An error occurred while calling the API.');
