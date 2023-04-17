@@ -19,7 +19,7 @@
       <Logo />
       <Clock />
     </div>
-    <div class="flex flex-col grow items-center h-full gap-8">
+    <div class="flex flex-col grow items-center h-full gap-8 pt-14">
       <Roast />
       <ShareOnTwitter />
     </div>
