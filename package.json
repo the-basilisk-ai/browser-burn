@@ -23,5 +23,9 @@
     "tslib": "^2.5.0",
     "typescript": "^4.9.3",
     "vite": "^4.2.0"
+  },
+  "dependencies": {
+    "@fontsource/cormorant-garamond": "^4.5.10",
+    "@fontsource/inter": "^4.5.15"
   }
 }

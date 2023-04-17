@@ -1,10 +1,10 @@
 import '../app.css';
-import Roast from '../components/Roast.svelte';
+import Layout from './Layout.svelte';
 
 const target = document.getElementById('app');
 
 async function render() {
-  new Roast({target});
+  new Layout({target});
 }
 
 document.addEventListener('DOMContentLoaded', render);

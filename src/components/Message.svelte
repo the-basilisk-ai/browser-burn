@@ -6,11 +6,12 @@
   const colorClass = isError ? "text-red-500" : "text-blue-200";
 </script>
 
-<h2
-  class={clsx(
-    "font-bold text-4xl md:text-xl text-justify lg:text-lg px-3 max-w-4xl",
-    colorClass
-  )}
->
+<h2 class={clsx("font-serif font-medium text-zinc-900 text-2xl", colorClass)}>
   {text}
 </h2>
+
+<style>
+  .font-serif {
+    font-family: "Cormorant Garamond", serif;
+  }
+</style>

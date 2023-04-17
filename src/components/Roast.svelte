@@ -39,12 +39,16 @@
   }
 </script>
 
-<div class="flex flex-col items-center pt-[10vh] h-screen bg-blue-900">
+<div class="w-7/12 max-w-7xl p-5 rounded-[10px] bg-white">
   {#if isLoading}
-    <Loading message={loadingMessage} />
+    Loading...
+    <!-- <Loading message={loadingMessage} /> -->
   {:else if error}
     <Message text={error} isError />
   {:else}
     <Message text={roast} />
   {/if}
+  <p class="font-[Inter] font-bold leading-4 mt-3.5">
+    Sincerely, your browsing history
+  </p>
 </div>
