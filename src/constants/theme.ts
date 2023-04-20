@@ -14,6 +14,7 @@ export interface Theme {
   bgGradientFrom: string;
   bgGradientTo: string;
   bgRoast: string;
+  bgLoading: { dark: string, light: string };
 }
 
 const darkMode: Theme = Object.freeze({
@@ -23,6 +24,7 @@ const darkMode: Theme = Object.freeze({
   bgGradientFrom: "#0D324D",
   bgGradientTo: "#7F5A83",
   bgRoast: twConfig.theme.textColor.zinc[800],
+  bgLoading: { dark: twConfig.theme.backgroundColor.gray[600], light: twConfig.theme.backgroundColor.gray[700] }
 });
 
 const lightMode: Theme = Object.freeze({
@@ -32,6 +34,7 @@ const lightMode: Theme = Object.freeze({
   bgGradientFrom: "#FDFCCE",
   bgGradientTo: "#CFEBFC",
   bgRoast: twConfig.theme.textColor.zinc[100],
+  bgLoading: { dark: twConfig.theme.backgroundColor.gray[300], light: twConfig.theme.backgroundColor.gray[200] }
 });
 
 let themes = {

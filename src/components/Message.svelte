@@ -1,7 +1,4 @@
 <script lang="ts">
-  import type { Theme } from "../constants/theme";
-  import { theme } from "../stores/theme";
-
   export let text: string;
 </script>
 

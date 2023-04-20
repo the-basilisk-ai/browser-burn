@@ -1,8 +1,10 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { HISTORY_HOURS } from "../constants/api";
   import loadingMessages from "../constants/loadingMessages";
   import type { Theme } from "../constants/theme";
   import { theme } from "../stores/theme";
+  import { isLoading, roast } from "../stores/api";
   import { getRoast } from "../api/roast";
   import Loading from "./Loading.svelte";
   import Message from "./Message.svelte";
@@ -10,15 +12,23 @@
   let themeValue: Theme;
   theme.subscribe((value) => (themeValue = value));
 
+  let isLoadingValue: boolean;
+  let roastValue: string;
+  isLoading.subscribe((value) => (isLoadingValue = value));
+  roast.subscribe((value) => (roastValue = value));
+
+  let error: string | null = null;
+
   const loadingMessage =
     loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
-  const hoursOfHistoryToFetch = 2;
-  let isLoading: boolean = true;
-  let error: string | null = null;
-  let roast: string | null = null;
+
+  // isLoading.set(true);
+  // roast.set(
+  //   "You seem to love pipelines more than a plumber. Maybe you should take a break from coding and actually enjoy some real-life pipelines, like the ones at the water park."
+  // );
 
   onMount(async () => {
-    roastHistory(hoursOfHistoryToFetch, onHistoryResults);
+    roastHistory(HISTORY_HOURS, onHistoryResults);
   });
 
   const roastHistory = async (
@@ -37,12 +47,13 @@
 
   async function onHistoryResults(history: chrome.history.HistoryItem[]) {
     try {
-      roast = await getRoast(history);
+      isLoading.set(true);
+      roast.set(await getRoast(history));
     } catch (e) {
       console.error(e);
       error = "Oops, something went wrong. Please try again later.";
     } finally {
-      isLoading = false;
+      isLoading.set(false);
     }
   }
 </script>
@@ -52,15 +63,13 @@
   style:background-color={themeValue.bgRoast}
   style:color={themeValue.textRoast}
 >
-  {#if isLoading}
-    <p>Loading...</p>
-    <!-- <Loading message={loadingMessage} /> -->
+  {#if isLoadingValue}
+    <!-- <p>Loading...</p> -->
+    <Loading message={loadingMessage} />
   {:else if error}
     <Message text={error} />
   {:else}
-    <Message text={roast} />
+    <Message text={roastValue} />
+    <p class="font-bold mt-3.5">Sincerely, your browsing history</p>
   {/if}
-  <p class="font-[Inter] font-bold leading-4 mt-3.5">
-    Sincerely, your browsing history
-  </p>
 </div>

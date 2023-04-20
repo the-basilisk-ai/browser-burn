@@ -5,13 +5,15 @@
   import { onMount, onDestroy } from "svelte";
 
   import { DARK_MODE, LIGHT_MODE, type Theme } from "../constants/theme";
+
   import { theme } from "../stores/theme";
+  import { roast, isLoading } from "../stores/api";
+
   import Logo from "../components/Logo.svelte";
   import Clock from "../components/Clock.svelte";
   import Roast from "../components/Roast.svelte";
-  import ShareOnTwitter from "../components/ShareOnTwitter.svelte";
-  import PoweredBy from "../components/PoweredBy.svelte";
   import ShareCard from "../components/ShareCard.svelte";
+  import PoweredBy from "../components/PoweredBy.svelte";
 
   const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
   const handleThemeChange = (e: MediaQueryList | MediaQueryListEvent) => {
@@ -25,7 +27,9 @@
   );
 
   let themeValue: Theme;
+  let isLoadingValue: boolean;
   theme.subscribe((value) => (themeValue = value));
+  isLoading.subscribe((value) => (isLoadingValue = value));
 </script>
 
 <div
@@ -40,9 +44,9 @@
       <Clock />
     </div>
 
-    <div class="flex flex-col grow items-center h-full gap-8 pt-14">
+    <div class="flex flex-col grow items-center h-full w-full gap-8 pt-14">
       <Roast />
-      <ShareCard />
+      <ShareCard isLoading={isLoadingValue} />
     </div>
     <div class="self-start px-6 pb-6">
       <PoweredBy />
