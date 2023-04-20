@@ -1,7 +1,9 @@
 <script lang="ts">
+  import { isLoading } from "../stores/api";
   import { onDestroy, onMount } from "svelte";
 
-  export let isLoading: boolean;
+  let isLoadingValue: boolean;
+  isLoading.subscribe((value) => (isLoadingValue = value));
 
   const shareText =
     "I just got roasted by my browsing history on BrowserBurn! Check it out at https://basiliskai.com/browserburn";
@@ -28,13 +30,13 @@
   const onCopyClick = async () => {
     await navigator.clipboard.writeText(shareURL);
     document.querySelector("#copy-button-text").innerHTML = "Copied!";
-    setTimeout(() => {
+    copyLinkTextTimeout = setTimeout(() => {
       document.querySelector("#copy-button-text").innerHTML = "Copy link";
     }, 1000);
   };
 </script>
 
-{#if isLoading}
+{#if isLoadingValue}
   <p class="text-white">no sharing yet...</p>
 {:else}
   <div class="flex gap-2">

@@ -5,9 +5,7 @@
   import { onMount, onDestroy } from "svelte";
 
   import { DARK_MODE, LIGHT_MODE, type Theme } from "../constants/theme";
-
   import { theme } from "../stores/theme";
-  import { roast, isLoading } from "../stores/api";
 
   import Logo from "../components/Logo.svelte";
   import Clock from "../components/Clock.svelte";
@@ -27,9 +25,7 @@
   );
 
   let themeValue: Theme;
-  let isLoadingValue: boolean;
   theme.subscribe((value) => (themeValue = value));
-  isLoading.subscribe((value) => (isLoadingValue = value));
 </script>
 
 <div
@@ -46,7 +42,7 @@
 
     <div class="flex flex-col grow items-center h-full w-full gap-8 pt-14">
       <Roast />
-      <ShareCard isLoading={isLoadingValue} />
+      <ShareCard />
     </div>
     <div class="self-start px-6 pb-6">
       <PoweredBy />

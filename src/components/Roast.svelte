@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { HISTORY_HOURS } from "../constants/api";
   import loadingMessages from "../constants/loadingMessages";
   import type { Theme } from "../constants/theme";
   import { theme } from "../stores/theme";
@@ -22,40 +21,15 @@
   const loadingMessage =
     loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
 
+  // For testing purposes
   // isLoading.set(true);
   // roast.set(
-  //   "You seem to love pipelines more than a plumber. Maybe you should take a break from coding and actually enjoy some real-life pipelines, like the ones at the water park."
+  //   "You've been busy, haven't you? From CSS to AI to pipelines, it's almost like you're trying hard, but not hard enough. Keep trying!"
   // );
 
   onMount(async () => {
-    roastHistory(HISTORY_HOURS, onHistoryResults);
+    getRoast();
   });
-
-  const roastHistory = async (
-    hours: number,
-    callback: (history: chrome.history.HistoryItem[]) => void
-  ) => {
-    console.debug("Fetching history...");
-    const startTime = new Date(Date.now() - hours * 60 * 60 * 1000).getTime();
-    const endTime = Date.now();
-
-    chrome.history.search(
-      { text: "", startTime, endTime, maxResults: 50 },
-      callback
-    );
-  };
-
-  async function onHistoryResults(history: chrome.history.HistoryItem[]) {
-    try {
-      isLoading.set(true);
-      roast.set(await getRoast(history));
-    } catch (e) {
-      console.error(e);
-      error = "Oops, something went wrong. Please try again later.";
-    } finally {
-      isLoading.set(false);
-    }
-  }
 </script>
 
 <div
@@ -64,7 +38,6 @@
   style:color={themeValue.textRoast}
 >
   {#if isLoadingValue}
-    <!-- <p>Loading...</p> -->
     <Loading message={loadingMessage} />
   {:else if error}
     <Message text={error} />
