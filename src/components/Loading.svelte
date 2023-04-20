@@ -8,7 +8,7 @@
   theme.subscribe((value) => (themeValue = value));
 </script>
 
-<div role="status" class="space-y-4 animate-pulse">
+<div role="status" class="space-y-3 animate-pulse">
   <div class="flex items-center w-full space-x-2">
     <div
       class="h-4 rounded-full w-32"

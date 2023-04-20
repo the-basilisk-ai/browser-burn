@@ -9,13 +9,13 @@
   // Create a LogoSvg component and get the markup from it
   // Allows us to use the theme color in the SVG
   // This seems dirty, but TODO a nicer way
-  const getSvgMarkup = (component, themeValue) => {
-    const elem = document.createElement("div");
-    const x = new component({
-      target: elem,
+  const getSvgMarkup = (logoSvgComponent, themeValue: Theme) => {
+    const container = document.createElement("div");
+    new logoSvgComponent({
+      target: container,
       props: { themeColor: themeValue.textBrand },
     });
-    const svg = elem.querySelector("svg");
+    const svg = container.querySelector("svg");
     const markup = svg?.outerHTML ?? "";
     return markup;
   };

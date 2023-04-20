@@ -2,7 +2,7 @@
   import "@fontsource/inter/400.css";
   import "@fontsource/inter/600.css";
   import "@fontsource/cormorant-garamond/latin-500.css";
-  import { onMount, onDestroy } from "svelte";
+  import { onMount } from "svelte";
 
   import { DARK_MODE, LIGHT_MODE, type Theme } from "../constants/theme";
   import { theme } from "../stores/theme";
@@ -19,10 +19,10 @@
   };
   // Set theme, set up change listener, and clean up listener on destroy
   handleThemeChange(darkModeQuery);
-  onMount(() => darkModeQuery.addEventListener("change", handleThemeChange));
-  onDestroy(() =>
-    darkModeQuery.removeEventListener("change", handleThemeChange)
-  );
+  onMount(() => {
+    darkModeQuery.addEventListener("change", handleThemeChange);
+    return () => darkModeQuery.removeEventListener("change", handleThemeChange);
+  });
 
   let themeValue: Theme;
   theme.subscribe((value) => (themeValue = value));

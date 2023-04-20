@@ -1,314 +1,135 @@
 <script lang="ts">
-  import { isLoading } from "../stores/api";
-  import { onDestroy, onMount } from "svelte";
+  import { onMount } from "svelte";
+  import { isLoading, roast } from "../stores/api";
+  import { theme } from "../stores/theme";
+  import type { Theme } from "../constants/theme";
+  import ShareButton from "../components/ShareButton.svelte";
+  import ShareTargets from "./ShareTargets.svelte";
 
+  let themeValue: Theme;
   let isLoadingValue: boolean;
+  let roastValue: string;
+  theme.subscribe((value) => (themeValue = value));
   isLoading.subscribe((value) => (isLoadingValue = value));
+  roast.subscribe((value) => (roastValue = value));
 
-  const shareText =
-    "I just got roasted by my browsing history on BrowserBurn! Check it out at https://basiliskai.com/browserburn";
-  const baseURL = "https://www.basiliskai.com";
+  let shareText = "I just got roasted by my browsing history on BrowserBurn!";
+  let shareCardElement;
 
-  $: shareURL = `${baseURL}/browserburn`;
-  $: encodedShareText = encodeURIComponent(shareText);
-  $: encodedShareURL = encodeURIComponent(shareURL);
-  $: encodedBaseUrl = encodeURIComponent(baseURL);
-
-  let copyLinkTextTimeout: number;
-  onMount(() => {
-    document
-      .querySelector("#copy-button")
-      .addEventListener("click", onCopyClick, false);
-  });
-  onDestroy(() => {
-    clearTimeout(copyLinkTextTimeout);
-    document
-      .querySelector("#copy-button")
-      .removeEventListener("click", onCopyClick, false);
-  });
-
-  const onCopyClick = async () => {
-    await navigator.clipboard.writeText(shareURL);
-    document.querySelector("#copy-button-text").innerHTML = "Copied!";
-    copyLinkTextTimeout = setTimeout(() => {
-      document.querySelector("#copy-button-text").innerHTML = "Copy link";
-    }, 1000);
+  let shareCardIsOpen = false;
+  const openShareCard = () => (shareCardIsOpen = true);
+  const closeShareCard = () => (shareCardIsOpen = false);
+  const handleEscapeKey = (e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      closeShareCard();
+    }
   };
+
+  onMount(() => {
+    window.addEventListener("keyup", handleEscapeKey);
+    return () => window.removeEventListener("keyup", handleEscapeKey);
+  });
 </script>
 
-{#if isLoadingValue}
-  <p class="text-white">no sharing yet...</p>
-{:else}
-  <div class="flex gap-2">
-    <!-- Facebook -->
-    <a
-      class="resp-sharing-button__link"
-      href={`https://facebook.com/sharer/sharer.php?u=${encodedShareURL}`}
-      target="_blank"
-      rel="noopener"
-      aria-label="Facebook"
-    >
-      <div
-        class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--medium"
-      >
-        <div
-          aria-hidden="true"
-          class="resp-sharing-button__icon resp-sharing-button__icon--solid"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path
-              d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.33C10.24.5 9.5 3.44 9.5 5.32v2.15h-3v4h3v12h5v-12h3.85l.42-4z"
-            />
-          </svg>
-        </div>
-        Facebook
-      </div>
-    </a>
+<!-- Modal toggle -->
+<ShareButton disabled={isLoadingValue} onClick={openShareCard} />
 
-    <!-- Twitter -->
-    <a
-      class="resp-sharing-button__link"
-      href={`https://twitter.com/intent/tweet/?text=${encodedShareText}&url=${encodedShareURL}`}
-      target="_blank"
-      rel="noopener"
-      aria-label="Twitter"
-    >
+{#if shareCardIsOpen}
+  <!-- Modal -->
+  <div
+    on:keydown={handleEscapeKey}
+    class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-full max-h-full backdrop-blur-sm"
+  >
+    <div class="relative mx-auto w-full max-w-4xl">
+      <!-- content -->
       <div
-        class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--medium"
+        class="relative rounded-[10px] shadow-2xl shadow-gray-900/20 pb-8"
+        style:background-color={themeValue.bgRoast}
       >
-        <div
-          aria-hidden="true"
-          class="resp-sharing-button__icon resp-sharing-button__icon--solid"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path
-              d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z"
-            />
-          </svg>
+        <!-- header -->
+        <div class="flex p-4">
+          <h3
+            class="grow text-xl font-semibold"
+            style:color={themeValue.textBrand}
+          >
+            Share your roast
+          </h3>
+          <button
+            type="button"
+            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            on:click={closeShareCard}
+            on:keyup={handleEscapeKey}
+          >
+            <svg
+              aria-hidden="true"
+              class="w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
         </div>
-        Twitter
-      </div>
-    </a>
-
-    <!-- E-Mail -->
-    <a
-      class="resp-sharing-button__link"
-      href={`mailto:?body=${encodedShareText}`}
-      target="_self"
-      rel="noopener"
-      aria-label="E-Mail"
-    >
-      <div
-        class="resp-sharing-button resp-sharing-button--email resp-sharing-button--medium"
-      >
-        <div
-          aria-hidden="true"
-          class="resp-sharing-button__icon resp-sharing-button__icon--solid"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path
-              d="M22 4H2C.9 4 0 4.9 0 6v12c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM7.25 14.43l-3.5 2c-.08.05-.17.07-.25.07-.17 0-.34-.1-.43-.25-.14-.24-.06-.55.18-.68l3.5-2c.24-.14.55-.06.68.18.14.24.06.55-.18.68zm4.75.07c-.1 0-.2-.03-.27-.08l-8.5-5.5c-.23-.15-.3-.46-.15-.7.15-.22.46-.3.7-.14L12 13.4l8.23-5.32c.23-.15.54-.08.7.15.14.23.07.54-.16.7l-8.5 5.5c-.08.04-.17.07-.27.07zm8.93 1.75c-.1.16-.26.25-.43.25-.08 0-.17-.02-.25-.07l-3.5-2c-.24-.13-.32-.44-.18-.68s.44-.32.68-.18l3.5 2c.24.13.32.44.18.68z"
-            />
-          </svg>
+        <!-- body -->
+        <div class="grid grid-cols-2 p-6 gap-4">
+          <div />
+          <div class="text-base" style:color={themeValue.textBrand}>
+            Customise your tweet text
+          </div>
+          <div
+            bind:this={shareCardElement}
+            class="min-w-screen flex items-center justify-center px-5 py-5 rounded-md border"
+            style={`background: linear-gradient(90deg, ${themeValue.bgGradientFrom} 0%, ${themeValue.bgGradientTo} 100%);`}
+            style:border-color={themeValue.bgLoading.light}
+          >
+            <div
+              class="w-full mx-auto rounded-lg shadow-lg px-5 pt-5 pb-10"
+              style="max-width: 500px"
+              style:background-color={themeValue.bgRoast}
+              style:color={themeValue.textRoast}
+            >
+              <div class="w-full mb-10">
+                <div class=" font-serif text-3xl text-left leading-tight">
+                  “
+                </div>
+                <p class="text-xl font-serif text-center">{roastValue}</p>
+                <div
+                  class="font-serif text-3xl text-right leading-tight h-2 -mt-3"
+                >
+                  ”
+                </div>
+              </div>
+              <div class="w-full">
+                <p class="text-md font-bold text-center">Get Roasted</p>
+                <p class="text-xs text-center">basiliskai.com/browserburn 🐍</p>
+              </div>
+            </div>
+          </div>
+          <textarea
+            bind:value={shareText}
+            class="text-base h-42 p-3 rounded-md border"
+            style:color={themeValue.textBrand}
+            style:background-color={themeValue.bgShareTextArea}
+            style:border-color={themeValue.bgLoading.light}
+          />
+          <div />
+          <div>
+            <ShareTargets {shareText} {shareCardElement} />
+          </div>
         </div>
-        E-Mail
       </div>
-    </a>
-
-    <!-- LinkedIn -->
-    <a
-      class="resp-sharing-button__link"
-      href={`https://www.linkedin.com/shareArticle?mini=true&url=${shareURL}&title=${encodedShareText}&summary=${encodedShareText}&source=${encodedBaseUrl}`}
-      target="_blank"
-      rel="noopener"
-      aria-label="LinkedIn"
-    >
-      <div
-        class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--medium"
-      >
-        <div
-          aria-hidden="true"
-          class="resp-sharing-button__icon resp-sharing-button__icon--solid"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path
-              d="M6.5 21.5h-5v-13h5v13zM4 6.5C2.5 6.5 1.5 5.3 1.5 4s1-2.4 2.5-2.4c1.6 0 2.5 1 2.6 2.5 0 1.4-1 2.5-2.6 2.5zm11.5 6c-1 0-2 1-2 2v7h-5v-13h5V10s1.6-1.5 4-1.5c3 0 5 2.2 5 6.3v6.7h-5v-7c0-1-1-2-2-2z"
-            />
-          </svg>
-        </div>
-        LinkedIn
-      </div>
-    </a>
-
-    <!-- WhatsApp -->
-    <a
-      class="resp-sharing-button__link"
-      href={`https://api.whatsapp.com/send?text=${encodedShareText}`}
-      target="_blank"
-      rel="noopener"
-      aria-label="WhatsApp"
-    >
-      <div
-        class="resp-sharing-button resp-sharing-button--whatsapp resp-sharing-button--medium"
-      >
-        <div
-          aria-hidden="true"
-          class="resp-sharing-button__icon resp-sharing-button__icon--solid"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-            ><path
-              d="M20.1 3.9C17.9 1.7 15 .5 12 .5 5.8.5.7 5.6.7 11.9c0 2 .5 3.9 1.5 5.6L.6 23.4l6-1.6c1.6.9 3.5 1.3 5.4 1.3 6.3 0 11.4-5.1 11.4-11.4-.1-2.8-1.2-5.7-3.3-7.8zM12 21.4c-1.7 0-3.3-.5-4.8-1.3l-.4-.2-3.5 1 1-3.4L4 17c-1-1.5-1.4-3.2-1.4-5.1 0-5.2 4.2-9.4 9.4-9.4 2.5 0 4.9 1 6.7 2.8 1.8 1.8 2.8 4.2 2.8 6.7-.1 5.2-4.3 9.4-9.5 9.4zm5.1-7.1c-.3-.1-1.7-.9-1.9-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6.1s-1.2-.5-2.3-1.4c-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6s.3-.3.4-.5c.2-.1.3-.3.4-.5.1-.2 0-.4 0-.5C10 9 9.3 7.6 9 7c-.1-.4-.4-.3-.5-.3h-.6s-.4.1-.7.3c-.3.3-1 1-1 2.4s1 2.8 1.1 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.1-.3-.3-.4-.6-.5z"
-            />
-          </svg>
-        </div>
-        WhatsApp
-      </div>
-    </a>
-
-    <!-- Telegram -->
-    <a
-      class="resp-sharing-button__link"
-      href={`https://t.me/share/url?text=${encodedShareText}&url=${encodedShareURL}`}
-      target="_blank"
-      rel="noopener"
-      aria-label="Telegram"
-    >
-      <div
-        class="resp-sharing-button resp-sharing-button--telegram resp-sharing-button--medium"
-      >
-        <div
-          aria-hidden="true"
-          class="resp-sharing-button__icon resp-sharing-button__icon--solid"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-            ><path
-              d="M.707 8.475C.275 8.64 0 9.508 0 9.508s.284.867.718 1.03l5.09 1.897 1.986 6.38a1.102 1.102 0 0 0 1.75.527l2.96-2.41a.405.405 0 0 1 .494-.013l5.34 3.87a1.1 1.1 0 0 0 1.046.135 1.1 1.1 0 0 0 .682-.803l3.91-18.795A1.102 1.102 0 0 0 22.5.075L.706 8.475z"
-            />
-          </svg>
-        </div>
-        Telegram
-      </div>
-    </a>
-
-    <!-- Copy link -->
-    <button
-      type="button"
-      id="copy-button"
-      class="resp-sharing-button__link w-24"
-    >
-      <div
-        class="resp-sharing-button resp-sharing-button--email resp-sharing-button--medium flex justify-center"
-      >
-        <div
-          aria-hidden="true"
-          class="resp-sharing-button__icon resp-sharing-button__icon--solid"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-            <path
-              d="M272 0H396.1c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9V336c0 26.5-21.5 48-48 48H272c-26.5 0-48-21.5-48-48V48c0-26.5 21.5-48 48-48zM48 128H192v64H64V448H256V416h64v48c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V176c0-26.5 21.5-48 48-48z"
-            />
-          </svg>
-        </div>
-        <span id="copy-button-text">Copy link</span>
-      </div>
-    </button>
+    </div>
   </div>
 {/if}
 
 <style>
-  .resp-sharing-button__link,
-  .resp-sharing-button__icon {
-    display: inline-block;
-  }
-
-  .resp-sharing-button__link {
-    text-decoration: none;
-    color: #fff;
-  }
-
-  .resp-sharing-button {
-    display: flex;
-    align-items: center;
-    border-radius: 5px;
-    transition: 25ms ease-out;
-    padding: 0.5em 0.75em;
-  }
-
-  .resp-sharing-button__icon svg {
-    width: 1em;
-    height: 1em;
-    margin-right: 0.4em;
-  }
-
-  /* Non solid icons get a stroke */
-  .resp-sharing-button__icon {
-    stroke: #fff;
-    fill: none;
-  }
-
-  /* Solid icons get a fill */
-  .resp-sharing-button__icon--solid {
-    fill: #fff;
-    stroke: none;
-  }
-
-  .resp-sharing-button--facebook {
-    background-color: #3b5998;
-    border-color: #3b5998;
-  }
-  .resp-sharing-button--facebook:hover,
-  .resp-sharing-button--facebook:active {
-    background-color: #2d4373;
-    border-color: #2d4373;
-  }
-
-  .resp-sharing-button--twitter {
-    background-color: #55acee;
-    border-color: #55acee;
-  }
-  .resp-sharing-button--twitter:hover,
-  .resp-sharing-button--twitter:active {
-    background-color: #2795e9;
-    border-color: #2795e9;
-  }
-
-  .resp-sharing-button--email {
-    background-color: #777777;
-    border-color: #777777;
-  }
-  .resp-sharing-button--email:hover,
-  .resp-sharing-button--email:active {
-    background-color: #5e5e5e;
-    border-color: #5e5e5e;
-  }
-
-  .resp-sharing-button--linkedin {
-    background-color: #0077b5;
-    border-color: #0077b5;
-  }
-  .resp-sharing-button--linkedin:hover,
-  .resp-sharing-button--linkedin:active {
-    background-color: #046293;
-    border-color: #046293;
-  }
-
-  .resp-sharing-button--whatsapp {
-    background-color: #25d366;
-    border-color: #25d366;
-  }
-  .resp-sharing-button--whatsapp:hover,
-  .resp-sharing-button--whatsapp:active {
-    background-color: #1da851;
-    border-color: #1da851;
-  }
-
-  .resp-sharing-button--telegram {
-    background-color: #54a9eb;
-    border-color: #54a9eb;
-  }
-  .resp-sharing-button--telegram:hover,
-  .resp-sharing-button--telegram:active {
-    background-color: #4b97d1;
-    border-color: #4b97d1;
+  .font-serif {
+    font-family: "Cormorant Garamond", serif;
   }
 </style>

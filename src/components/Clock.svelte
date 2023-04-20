@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Theme } from "../constants/theme";
   import { theme } from "../stores/theme";
-  import { onMount, onDestroy } from "svelte";
+  import { onMount } from "svelte";
 
   export let use24h: boolean = false;
 
@@ -19,10 +19,8 @@
     interval = setInterval(() => {
       date = new Date();
     }, 1000);
-  });
 
-  onDestroy(() => {
-    clearInterval(interval);
+    return () => clearInterval(interval);
   });
 </script>
 
