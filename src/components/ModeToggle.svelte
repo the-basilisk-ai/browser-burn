@@ -10,13 +10,8 @@
   };
 </script>
 
-<div class="absolute left-1/2 top-8">
-  <button
-    on:click={toggleMode}
-    type="button"
-    class=""
-    aria-label="toggle color mode"
-  >
+<div class="absolute left-1/2 -ml-3 top-8">
+  <button on:click={toggleMode} type="button" aria-label="toggle color mode">
     <svg
       width="24"
       height="24"
@@ -24,8 +19,6 @@
       fill={themeValue.textBrand}
       xmlns="http://www.w3.org/2000/svg"
       focusable="false"
-      class="chakra-icon css-abn6b1"
-      aria-hidden="true"
     >
       {#if themeValue.key === DARK_MODE}
         <path

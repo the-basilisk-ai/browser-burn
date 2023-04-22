@@ -9,16 +9,19 @@ const getFromSyncStorage = () => new Promise(resolve => chrome.storage.sync.get(
 
 const createTheme = () => {
   let syncedValue: string;
-  getFromSyncStorage().then((result) => {
-    syncedValue = result[activeModeKey];
-  });
-  console.log("syncedValue", syncedValue);
+  getFromSyncStorage()
+    .then((result) => syncedValue = result[activeModeKey]);
+
+  if (syncedValue) {
+    console.debug("Restored mode from synced storage:", syncedValue);
+  }
+
   const { subscribe, set } = writable<Theme>(syncedValue || getTheme[LIGHT_MODE]);
   return {
     subscribe,
     set: (key: ACTIVE_MODE) => {
       set(getTheme(key));
-      setInSyncStorage(key).then(() => console.debug("setInSyncStorage", key));
+      setInSyncStorage(key).then(() => console.debug("Set mode in synced storage:", key));
     },
   }
 }
