@@ -85,25 +85,18 @@
             style:border-color={themeValue.bgLoading.light}
           >
             <div
-              class="w-full mx-auto rounded-lg shadow-lg px-5 pt-5 pb-10"
-              style="max-width: 500px"
+              class="w-full max-w-xl mx-auto rounded-lg shadow-lg px-5 pt-5 pb-8"
               style:background-color={themeValue.bgRoast}
               style:color={themeValue.textRoast}
             >
-              <div class="w-full mb-10">
-                <div class=" font-serif text-3xl text-left leading-tight">
-                  “
-                </div>
-                <p class="text-xl font-serif text-center">{roastValue}</p>
-                <div
-                  class="font-serif text-3xl text-right leading-tight h-2"
-                >
-                  ”
-                </div>
+              <div class="w-full font-serif text-3xl">
+                <div>“</div>
+                <p class="text-xl text-center">{roastValue}</p>
+                <div class="text-3xl text-right mt-3">”</div>
               </div>
-              <div class="w-full">
-                <p class="text-md font-bold text-center">Get Roasted</p>
-                <p class="text-xs text-center">basiliskai.com/browserburn 🐍</p>
+              <div class="w-full text-center">
+                <p class="text-md font-bold">Get Roasted</p>
+                <p class="text-xs">basiliskai.com/browserburn 🐍</p>
               </div>
             </div>
           </div>

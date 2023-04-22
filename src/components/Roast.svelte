@@ -43,6 +43,6 @@
     <Message text={error} />
   {:else}
     <Message text={roastValue} />
-    <p class="font-bold mt-3.5">Sincerely, your browsing history</p>
+    <p class="font-bold mt-5">Sincerely, your browsing history</p>
   {/if}
 </div>
