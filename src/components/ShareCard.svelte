@@ -40,7 +40,7 @@
     on:keydown={handleEscapeKey}
     class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-full max-h-full backdrop-blur-sm"
   >
-    <div class="relative mx-auto w-full max-w-4xl">
+    <div class="relative mx-auto w-full max-w-xl">
       <!-- content -->
       <div
         class="relative rounded-[10px] shadow-2xl shadow-gray-900/20 pb-8"
@@ -77,11 +77,7 @@
           </button>
         </div>
         <!-- body -->
-        <div class="grid grid-cols-2 p-6 gap-4">
-          <div />
-          <div class="text-base" style:color={themeValue.textBrand}>
-            Customise your tweet text
-          </div>
+        <div class="grid grid-cols-1 p-6 gap-4">
           <div
             bind:this={shareCardElement}
             class="min-w-screen flex items-center justify-center px-5 py-5 rounded-md border"
@@ -100,7 +96,7 @@
                 </div>
                 <p class="text-xl font-serif text-center">{roastValue}</p>
                 <div
-                  class="font-serif text-3xl text-right leading-tight h-2 -mt-3"
+                  class="font-serif text-3xl text-right leading-tight h-2"
                 >
                   ”
                 </div>
@@ -111,13 +107,6 @@
               </div>
             </div>
           </div>
-          <textarea
-            bind:value={shareText}
-            class="text-base h-42 p-3 rounded-md border"
-            style:color={themeValue.textBrand}
-            style:background-color={themeValue.bgShareTextArea}
-            style:border-color={themeValue.bgLoading.light}
-          />
           <div />
           <div>
             <ShareTargets {shareText} {shareCardElement} />
