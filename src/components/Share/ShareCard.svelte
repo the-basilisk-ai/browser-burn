@@ -1,9 +1,9 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { isLoading, roast } from "../stores/api";
-  import { theme } from "../stores/theme";
-  import type { Theme } from "../constants/theme";
-  import ShareButton from "../components/ShareButton.svelte";
+  import { isLoading, roast } from "../../stores/api";
+  import { theme } from "../../stores/theme";
+  import type { Theme } from "../../constants/theme";
+  import ShareButton from "./ShareButton.svelte";
   import ShareTargets from "./ShareTargets.svelte";
 
   let themeValue: Theme;

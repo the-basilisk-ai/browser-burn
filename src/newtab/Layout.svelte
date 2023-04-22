@@ -10,8 +10,9 @@
   import Logo from "../components/Logo.svelte";
   import Clock from "../components/Clock.svelte";
   import Roast from "../components/Roast.svelte";
-  import ShareCard from "../components/ShareCard.svelte";
+  import ShareCard from "../components/Share/ShareCard.svelte";
   import PoweredBy from "../components/PoweredBy.svelte";
+  import ModeToggle from "../components/ModeToggle.svelte";
 
   const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
   const handleThemeChange = (e: MediaQueryList | MediaQueryListEvent) => {
@@ -32,6 +33,7 @@
   class="flex flex-col items-center min-h-screen"
   style={`background: linear-gradient(90deg, ${themeValue.bgGradientFrom} 0%, ${themeValue.bgGradientTo} 100%);`}
 >
+  <ModeToggle />
   <div
     class="flex flex-col items-center w-full max-w-screen-2xl min-h-screen bg-gradient text-zinc-800"
   >

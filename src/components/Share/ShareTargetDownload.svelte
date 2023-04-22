@@ -1,20 +1,30 @@
 <script lang="ts">
-  import { theme } from "../stores/theme";
-  import type { Theme } from "../constants/theme";
+  import { theme } from "../../stores/theme";
+  import type { Theme } from "../../constants/theme";
 
-  export let href: string;
+  export let onClick: () => void;
   export let name: string;
-  export let target: string = "_blank";
 
   let themeValue: Theme;
   theme.subscribe((value) => (themeValue = value));
+
+  const handleKeyUp = (e: Event) => {
+    if (e instanceof KeyboardEvent && e.key === "Enter") {
+      onClick();
+    }
+  };
 
   let backgroundElem: HTMLElement;
   const handleMouseOver = () => backgroundElem.classList.add("hover");
   const handleMouseOut = () => backgroundElem.classList.remove("hover");
 </script>
 
-<a {href} {target} rel="noopener" aria-label={name}>
+<div
+  on:click={onClick}
+  on:keyup={handleKeyUp}
+  aria-label={name}
+  class="target cursor-pointer"
+>
   <div
     bind:this={backgroundElem}
     class="background flex items-center justify-center rounded-full"
@@ -38,14 +48,14 @@
   >
     {name}
   </div>
-</a>
+</div>
 
 <style>
   /* Hack, pushes a style into the global namespace but it's scoped to
      THIS specific component instance at runtime because of the `a >`.
      This is required because Svelte wants to prune classes that aren't
      statically referenced. */
-  a > :global(.hover) {
+  div.target > :global(.hover) {
     filter: brightness(120%);
     scale: 110%;
   }
