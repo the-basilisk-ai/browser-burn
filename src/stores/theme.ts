@@ -5,7 +5,7 @@ import type { Theme } from "../constants/theme";
 const activeModeKey = "BROWSER_BURN_ACTIVE_MODE";
 
 const setInSyncStorage = (activeMode: string) => chrome.storage.sync.set({ [activeModeKey]: activeMode});
-const getFromSyncStorage = () => chrome.storage.sync.get([activeModeKey]);
+const getFromSyncStorage = () => new Promise(resolve => chrome.storage.sync.get([activeModeKey], resolve));
 
 const createTheme = () => {
   let syncedValue: string;
