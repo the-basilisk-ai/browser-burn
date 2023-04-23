@@ -1,10 +1,5 @@
 <script lang="ts">
-  import "@fontsource/inter/400.css";
-  import "@fontsource/inter/600.css";
-  import "@fontsource/cormorant-garamond/latin-500.css";
-
   import { theme } from "../stores/theme";
-
   import Logo from "../components/Logo.svelte";
   import Clock from "../components/Clock.svelte";
   import Roast from "../components/Roast.svelte";
@@ -12,15 +7,13 @@
   import PoweredBy from "../components/PoweredBy.svelte";
   import Navigation from "../components/Navigation/Navigation.svelte";
 
-  theme.subscribe((value) => (themeValue = value));
-  $: themeValue = $theme;
   let themeInit = theme.restore();
 </script>
 
 {#await themeInit then}
   <div
     class="flex flex-col items-center min-h-screen"
-    style={`background: linear-gradient(90deg, ${themeValue.bgGradientFrom} 0%, ${themeValue.bgGradientTo} 100%);`}
+    style={`background: linear-gradient(90deg, ${$theme.bgGradientFrom} 0%, ${$theme.bgGradientTo} 100%);`}
   >
     <div
       class="flex flex-col items-center w-full max-w-screen-2xl min-h-screen bg-gradient text-zinc-800"

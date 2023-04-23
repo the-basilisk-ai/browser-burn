@@ -3,13 +3,10 @@
   import { theme } from "../stores/theme";
   import { onMount } from "svelte";
 
-  display24HClock.subscribe((value) => (display24HClockValue = value));
-  $: display24HClockValue = $display24HClock;
-
   const padZero = (num: number) => (num < 10 ? `0${num}` : num);
 
   let date = new Date();
-  $: hours = display24HClockValue
+  $: hours = $display24HClock
     ? padZero(date.getHours())
     : date.getHours() % 12 || 12;
   $: minutes = padZero(date.getMinutes());

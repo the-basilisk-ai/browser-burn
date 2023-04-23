@@ -2,12 +2,10 @@
   import { onMount } from "svelte";
   import loadingMessages from "../constants/loadingMessages";
   import { theme } from "../stores/theme";
-  import { isLoading, roast } from "../stores/api";
+  import { isLoading, roast, error } from "../stores/api";
   import { getRoast } from "../api/roast";
   import Loading from "./Loading.svelte";
   import Message from "./Message.svelte";
-
-  let error: string | null = null;
 
   const loadingMessage =
     loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
@@ -30,8 +28,8 @@
 >
   {#if $isLoading}
     <Loading message={loadingMessage} />
-  {:else if error}
-    <Message text={error} />
+  {:else if $error}
+    <Message text={$error} />
   {:else}
     <Message text={$roast} />
     <p class="font-bold mt-5">Sincerely, your browsing history</p>
