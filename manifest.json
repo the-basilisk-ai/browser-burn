@@ -10,7 +10,9 @@
         "https://api.openai.com/v1/chat/completions"
     ],
     "permissions": [
-        "history"
+        "history",
+        "storage",
+        "tabs"
     ],
     "chrome_url_overrides": {
         "newtab": "src/newtab/index.html"

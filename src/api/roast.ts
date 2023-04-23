@@ -1,6 +1,30 @@
-import { API_KEY, API_URL, ROAST_CHARACTER_LIMIT } from "../constants/api";
+import { isLoading, roast, error } from "../stores/api";
+import { API_KEY, API_URL, ROAST_CHARACTER_LIMIT, HISTORY_HOURS } from "../constants/api";
 
-export const getRoast = async (history: chrome.history.HistoryItem[]): Promise<string> => {
+export const getRoast = async () => {
+  console.debug("Fetching history...");
+  const startTime = new Date(Date.now() - HISTORY_HOURS * 60 * 60 * 1000).getTime();
+  const endTime = Date.now();
+
+  chrome.history.search(
+    { text: "", startTime, endTime, maxResults: 50 },
+    onHistoryResults
+  );
+};
+
+const onHistoryResults = async (history: chrome.history.HistoryItem[]) => {
+  try {
+    isLoading.set(true);
+    roast.set(await roastHistory(history.filter((h) => h.title !== 'New Tab - BrowserBurn')));
+  } catch (e) {
+    console.error(e);
+    error.set("Oops, something went wrong. Please try again later.");
+  } finally {
+    isLoading.set(false);
+  }
+}
+
+const roastHistory = async (history: chrome.history.HistoryItem[]): Promise<string> => {
   const historyLines = history
     .map((h: chrome.history.HistoryItem) => h.title)
     .join("\n");
@@ -11,7 +35,6 @@ Do not make up a response if you get provided with an empty history. Instead, si
 HISTORY START
 ${historyLines}
 HISTORY END`;
-
 
   const response = await fetch(API_URL, {
     method: "POST",
@@ -42,3 +65,7 @@ HISTORY END`;
     throw new Error('An error occurred while calling the API.');
   }
 };
+
+
+
+
