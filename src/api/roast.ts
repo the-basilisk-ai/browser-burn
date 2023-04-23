@@ -1,5 +1,10 @@
 import { isLoading, roast, error } from "../stores/api";
-import { API_KEY, API_URL, ROAST_CHARACTER_LIMIT, HISTORY_HOURS } from "../constants/api";
+import { 
+  API_KEY,
+  API_URL,
+  ROAST_CHARACTER_LIMIT,
+  HISTORY_HOURS,
+  ERROR_MESSAGE_429 } from "../constants/api";
 
 export const getRoast = async () => {
   console.debug("Fetching history...");
@@ -62,7 +67,12 @@ HISTORY END`;
     return roast;
   } else {
     console.error(await response.text());
-    throw new Error('An error occurred while calling the API.');
+    if (response.status === 429) {
+      error.set(ERROR_MESSAGE_429);
+      return null;
+    } else {
+      throw new Error('An error occurred while calling the API.');
+    }
   }
 };
 
