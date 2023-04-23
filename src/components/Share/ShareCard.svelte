@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { afterUpdate, onDestroy } from "svelte";
+  import { afterUpdate } from "svelte";
   import { isLoading, roast } from "../../stores/api";
   import { theme } from "../../stores/theme";
   import ShareButton from "./ShareButton.svelte";
@@ -62,11 +62,6 @@
     lastInput.addEventListener("keydown", handleKeyDownLastInput);
     // Redirect last tab to first input
     firstInput.addEventListener("keydown", handleKeyDownFirstInput);
-  });
-
-  onDestroy(() => {
-    lastInput.removeEventListener("keydown", handleKeyDownLastInput);
-    firstInput.removeEventListener("keydown", handleKeyDownFirstInput);
   });
 </script>
 

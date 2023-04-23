@@ -52,10 +52,10 @@
 
 <style>
   /* Hack, pushes a style into the global namespace but it's scoped to
-     THIS specific component instance at runtime because of the `a >`.
+     THIS specific component instance at runtime because of the `button.target >`.
      This is required because Svelte wants to prune classes that aren't
      statically referenced. */
-  div.target > :global(.hover) {
+  button.target > :global(.hover) {
     filter: brightness(120%);
     scale: 110%;
   }

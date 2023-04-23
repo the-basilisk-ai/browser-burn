@@ -1,5 +1,6 @@
 <script lang="ts">
   import { theme } from "../../stores/theme";
+  import ClockToggle from "../ClockToggle.svelte";
   import ModeToggle from "../ModeToggle.svelte";
   import NavigationSvg from "./NavigationSvg.svelte";
 
@@ -7,6 +8,8 @@
 
   theme.subscribe((value) => (themeValue = value));
   $: themeValue = $theme;
+
+  let mouseOver = false;
 
   const settingsUrl = "chrome://settings";
   const bookmarksUrl = "chrome://bookmarks";
@@ -27,15 +30,28 @@
   $: handleKeyUpHistory = (e: KeyboardEvent) => handleKeyUp(e, historyUrl);
 </script>
 
-<nav class={className} style:color={themeValue.textBrand}>
+<nav
+  class={className}
+  style:color={themeValue.textBrand}
+  on:mouseenter={() => (mouseOver = true)}
+  on:focus={() => (mouseOver = true)}
+  on:mouseleave={() => (mouseOver = false)}
+  on:blur={() => (mouseOver = false)}
+>
   <div
-    class="flex items-center rounded-md p-2 pl-3 pr-3 space-x-2"
+    class="flex items-center rounded-md p-2 pl-3 pr-3 space-x-2 h-10"
     style:background-color={themeValue.bgRoast}
   >
-    <ModeToggle className="pr-1" />
+    {#if mouseOver}
+      <ModeToggle className="pr-1" />
+      <ClockToggle className="pr-1" />
+    {/if}
     <div
-      class="flex items-center space-x-2 border-l border-l-2 pl-3"
-      style:border-color={themeValue.navigationDivider}
+      class="flex items-center space-x-2"
+      style:border-left={mouseOver
+        ? `2px solid ${themeValue.navigationDivider}`
+        : "none"}
+      style:padding-left={mouseOver ? "0.75rem" : "0"}
     >
       <button
         type="button"

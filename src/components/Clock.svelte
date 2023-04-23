@@ -1,16 +1,19 @@
 <script lang="ts">
+  import { display24HClock } from "../stores/clock";
   import { theme } from "../stores/theme";
   import { onMount } from "svelte";
 
-  export let use24h: boolean = false;
-
   theme.subscribe((value) => (themeValue = value));
   $: themeValue = $theme;
+  display24HClock.subscribe((value) => (display24HClockValue = value));
+  $: display24HClockValue = $display24HClock;
 
   const padZero = (num: number) => (num < 10 ? `0${num}` : num);
 
   let date = new Date();
-  $: hours = use24h ? padZero(date.getHours()) : date.getHours() % 12 || 12;
+  $: hours = display24HClockValue
+    ? padZero(date.getHours())
+    : date.getHours() % 12 || 12;
   $: minutes = padZero(date.getMinutes());
 
   let interval: number;
