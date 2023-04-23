@@ -1,6 +1,6 @@
 <script lang="ts">
   import { afterUpdate } from "svelte";
-  import { isLoading, roast } from "../../stores/api";
+  import { isLoading, roast, error } from "../../stores/api";
   import { theme } from "../../stores/theme";
   import ShareButton from "./ShareButton.svelte";
   import ShareTargets from "./ShareTargets.svelte";
@@ -61,7 +61,9 @@
 <svelte:window on:keyup={handleEscapeKey} />
 
 <!-- Modal toggle -->
-<ShareButton disabled={$isLoading} onClick={openShareCard} />
+{#if !$error}
+  <ShareButton disabled={$isLoading} onClick={openShareCard} />
+{/if}
 
 {#if shareCardIsOpen}
   <!-- Modal -->
