@@ -18,7 +18,7 @@ export interface Theme {
   bgRoast: string;
   bgLoading: { dark: string, light: string };
   bgShareIcon: string;
-  bgShareTextArea: string; // wat
+  navigationDivider: string;
 }
 
 const darkMode: Theme = Object.freeze({
@@ -32,7 +32,7 @@ const darkMode: Theme = Object.freeze({
   bgRoast: twConfig.theme.textColor.zinc[800],
   bgLoading: { dark: twConfig.theme.backgroundColor.gray[700], light: twConfig.theme.backgroundColor.gray[600] },
   bgShareIcon: "#475284",
-  bgShareTextArea: twConfig.theme.textColor.zinc[700],
+  navigationDivider: twConfig.theme.textColor.gray[600],
 });
 
 const lightMode: Theme = Object.freeze({
@@ -46,7 +46,7 @@ const lightMode: Theme = Object.freeze({
   bgRoast: twConfig.theme.textColor.zinc[50],
   bgLoading: { dark: twConfig.theme.backgroundColor.gray[300], light: twConfig.theme.backgroundColor.gray[200] },
   bgShareIcon: twConfig.theme.textColor.zinc[100],
-  bgShareTextArea: twConfig.theme.textColor.white as string,
+  navigationDivider: twConfig.theme.textColor.gray[300],
 });
 
 let themes = {
