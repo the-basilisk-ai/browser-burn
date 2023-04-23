@@ -15,7 +15,7 @@ export const getRoast = async () => {
 const onHistoryResults = async (history: chrome.history.HistoryItem[]) => {
   try {
     isLoading.set(true);
-    roast.set(await roastHistory(history));
+    roast.set(await roastHistory(history.filter((h) => h.title !== 'New Tab - BrowserBurn')));
   } catch (e) {
     console.error(e);
     error.set("Oops, something went wrong. Please try again later.");
