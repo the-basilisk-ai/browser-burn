@@ -1,17 +1,16 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { afterUpdate, onDestroy } from "svelte";
   import { isLoading, roast } from "../../stores/api";
   import { theme } from "../../stores/theme";
-  import type { Theme } from "../../constants/theme";
   import ShareButton from "./ShareButton.svelte";
   import ShareTargets from "./ShareTargets.svelte";
 
-  let themeValue: Theme;
-  let isLoadingValue: boolean;
-  let roastValue: string;
   theme.subscribe((value) => (themeValue = value));
   isLoading.subscribe((value) => (isLoadingValue = value));
   roast.subscribe((value) => (roastValue = value));
+  $: themeValue = $theme;
+  $: isLoadingValue = $isLoading;
+  $: roastValue = $roast;
 
   let shareText = "I just got roasted by my browsing history on BrowserBurn!";
   let shareCardElement: HTMLElement;
@@ -25,11 +24,53 @@
     }
   };
 
-  onMount(() => {
-    window.addEventListener("keyup", handleEscapeKey);
-    return () => window.removeEventListener("keyup", handleEscapeKey);
+  let modalElement: HTMLElement;
+  const handleClickOutside = (e: MouseEvent) => {
+    if (!modalElement.contains(e.target as Node)) {
+      closeShareCard();
+    }
+  };
+
+  let firstInput: HTMLElement;
+  let lastInput: HTMLElement;
+
+  const handleKeyDownFirstInput = (e: KeyboardEvent) => {
+    if (e.key === "Tab" && e.shiftKey) {
+      e.preventDefault();
+      lastInput.focus();
+    }
+  };
+
+  const handleKeyDownLastInput = (e: KeyboardEvent) => {
+    if (e.key === "Tab" && !e.shiftKey) {
+      e.preventDefault();
+      firstInput.focus();
+    }
+  };
+
+  afterUpdate(() => {
+    if (!shareCardIsOpen) {
+      return;
+    }
+
+    const inputs = [...modalElement.querySelectorAll("button, a")];
+    firstInput = inputs.at(0) as HTMLElement;
+    lastInput = inputs.at(inputs.length - 1) as HTMLElement;
+    firstInput.focus();
+
+    // Redirect first shift+tab to last input
+    lastInput.addEventListener("keydown", handleKeyDownLastInput);
+    // Redirect last tab to first input
+    firstInput.addEventListener("keydown", handleKeyDownFirstInput);
+  });
+
+  onDestroy(() => {
+    lastInput.removeEventListener("keydown", handleKeyDownLastInput);
+    firstInput.removeEventListener("keydown", handleKeyDownFirstInput);
   });
 </script>
+
+<svelte:window on:keyup={handleEscapeKey} />
 
 <!-- Modal toggle -->
 <ShareButton disabled={isLoadingValue} onClick={openShareCard} />
@@ -38,11 +79,13 @@
   <!-- Modal -->
   <div
     on:keydown={handleEscapeKey}
+    on:click={handleClickOutside}
     class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-full max-h-full backdrop-blur-sm"
   >
     <div class="relative mx-auto w-full max-w-xl">
       <!-- content -->
       <div
+        bind:this={modalElement}
         class="relative rounded-[10px] shadow-2xl shadow-gray-900/20 pb-8"
         style:background-color={themeValue.bgRoast}
       >
