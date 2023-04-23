@@ -4,10 +4,6 @@ import type { Theme } from "../constants/theme";
 
 const themeModeKey = "BROWSER_BURN_THEME_MODE";
 
-chrome.storage.local.get([themeModeKey], function(result) {
-  console.log('Value currently is ' + result[themeModeKey]);
-});
-
 const setInSyncStorage = (activeMode: string) => chrome.storage.local.set({ [themeModeKey]: activeMode});
 const getFromSyncStorage = () => new Promise(resolve => chrome.storage.local.get([themeModeKey], resolve));
 
@@ -16,7 +12,6 @@ const createTheme = () => {
 
   const restore = async () => {
     const result = await getFromSyncStorage();
-    console.log('restore', result);
     const storedValue: ACTIVE_MODE = result[themeModeKey];
 
     if (storedValue) {

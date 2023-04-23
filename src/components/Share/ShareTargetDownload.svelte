@@ -4,9 +4,6 @@
   export let onClick: () => void;
   export let name: string;
 
-  theme.subscribe((value) => (themeValue = value));
-  $: themeValue = $theme;
-
   const handleKeyUp = (e: Event) => {
     if (e instanceof KeyboardEvent && e.key === "Enter") {
       onClick();
@@ -28,7 +25,7 @@
   <div
     bind:this={backgroundElem}
     class="background flex items-center justify-center rounded-full"
-    style:background-color={themeValue.bgShareIcon}
+    style:background-color={$theme.bgShareIcon}
     on:mouseover={handleMouseOver}
     on:mouseout={handleMouseOut}
     on:focus={handleMouseOver}
@@ -37,15 +34,12 @@
     <div
       aria-hidden="true"
       class="flex items-center justify-center w-14 h-14"
-      style:fill={themeValue.textShareIcon}
+      style:fill={$theme.textShareIcon}
     >
       <slot />
     </div>
   </div>
-  <div
-    class="text-xs text-center w-full mt-2"
-    style:color={themeValue.textShare}
-  >
+  <div class="text-xs text-center w-full mt-2" style:color={$theme.textShare}>
     {name}
   </div>
 </button>

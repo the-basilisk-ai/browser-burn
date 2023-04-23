@@ -5,13 +5,6 @@
   import ShareButton from "./ShareButton.svelte";
   import ShareTargets from "./ShareTargets.svelte";
 
-  theme.subscribe((value) => (themeValue = value));
-  isLoading.subscribe((value) => (isLoadingValue = value));
-  roast.subscribe((value) => (roastValue = value));
-  $: themeValue = $theme;
-  $: isLoadingValue = $isLoading;
-  $: roastValue = $roast;
-
   let shareText = "I just got roasted by my browsing history on BrowserBurn!";
   let shareCardElement: HTMLElement;
 
@@ -68,7 +61,7 @@
 <svelte:window on:keyup={handleEscapeKey} />
 
 <!-- Modal toggle -->
-<ShareButton disabled={isLoadingValue} onClick={openShareCard} />
+<ShareButton disabled={$isLoading} onClick={openShareCard} />
 
 {#if shareCardIsOpen}
   <!-- Modal -->
@@ -82,14 +75,11 @@
       <div
         bind:this={modalElement}
         class="relative rounded-[10px] shadow-2xl shadow-gray-900/20 pb-8"
-        style:background-color={themeValue.bgRoast}
+        style:background-color={$theme.bgRoast}
       >
         <!-- header -->
         <div class="flex p-4">
-          <h3
-            class="grow text-xl font-semibold"
-            style:color={themeValue.textBrand}
-          >
+          <h3 class="grow text-xl font-semibold" style:color={$theme.textBrand}>
             Share your roast
           </h3>
           <button
@@ -119,17 +109,17 @@
           <div
             bind:this={shareCardElement}
             class="min-w-screen flex items-center justify-center px-5 py-5 rounded-md border"
-            style={`background: linear-gradient(90deg, ${themeValue.bgGradientFrom} 0%, ${themeValue.bgGradientTo} 100%);`}
-            style:border-color={themeValue.bgLoading.light}
+            style={`background: linear-gradient(90deg, ${$theme.bgGradientFrom} 0%, ${$theme.bgGradientTo} 100%);`}
+            style:border-color={$theme.bgLoading.light}
           >
             <div
               class="w-full max-w-xl mx-auto rounded-lg shadow-lg px-5 pt-5 pb-8"
-              style:background-color={themeValue.bgRoast}
-              style:color={themeValue.textRoast}
+              style:background-color={$theme.bgRoast}
+              style:color={$theme.textRoast}
             >
               <div class="w-full font-serif text-3xl">
                 <div>“</div>
-                <p class="text-xl text-center">{roastValue}</p>
+                <p class="text-xl text-center">{$roast}</p>
                 <div class="text-3xl text-right mt-3">”</div>
               </div>
               <div class="w-full text-center">

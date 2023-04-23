@@ -4,12 +4,7 @@
 
   export let className: string = "";
 
-  theme.subscribe((value) => (themeValue = value));
-  display24HClock.subscribe((value) => (display24HClockValue = value));
-  $: themeValue = $theme;
-  $: display24HClockValue = $display24HClock;
-
-  const toggleMode = () => display24HClock.set(!display24HClockValue);
+  const toggleMode = () => display24HClock.set(!$display24HClock);
 </script>
 
 <button
@@ -19,8 +14,8 @@
   aria-label="toggle clock mode"
   on:click={toggleMode}
 >
-  <div class="w-7 font-bold text-xl" style:color={themeValue.textBrand}>
-    {#if display24HClockValue}
+  <div class="w-7 font-bold text-xl" style:color={$theme.textBrand}>
+    {#if $display24HClock}
       24
     {:else}
       12

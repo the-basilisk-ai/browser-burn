@@ -4,9 +4,6 @@
   export let disabled: boolean = true;
   export let onClick: () => void;
 
-  theme.subscribe((value) => (themeValue = value));
-  $: themeValue = $theme;
-
   const handleKeyUp = (e: KeyboardEvent) => {
     if (e.key === "Enter" || e.key === "Space") {
       onClick();
@@ -22,7 +19,7 @@
     on:keyup={handleKeyUp}
     class={"flex items-center gap-2 px-5 py-3 rounded-xl text-zinc-100 select-none hover:font-bold"}
     style:pointer-events={disabled ? "none" : "auto"}
-    style:color={themeValue.textBrand}
+    style:color={$theme.textBrand}
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"

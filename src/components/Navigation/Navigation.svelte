@@ -6,9 +6,6 @@
 
   export let className: string = "";
 
-  theme.subscribe((value) => (themeValue = value));
-  $: themeValue = $theme;
-
   let mouseOver = false;
 
   const settingsUrl = "chrome://settings";
@@ -32,7 +29,7 @@
 
 <nav
   class={className}
-  style:color={themeValue.textBrand}
+  style:color={$theme.textBrand}
   on:mouseenter={() => (mouseOver = true)}
   on:focus={() => (mouseOver = true)}
   on:mouseleave={() => (mouseOver = false)}
@@ -40,7 +37,7 @@
 >
   <div
     class="flex items-center rounded-md p-2 pl-3 pr-3 space-x-2 h-10"
-    style:background-color={themeValue.bgRoast}
+    style:background-color={$theme.bgRoast}
   >
     {#if mouseOver}
       <ModeToggle className="pr-1" />
@@ -49,7 +46,7 @@
     <div
       class="flex items-center space-x-2"
       style:border-left={mouseOver
-        ? `2px solid ${themeValue.navigationDivider}`
+        ? `2px solid ${$theme.navigationDivider}`
         : "none"}
       style:padding-left={mouseOver ? "0.75rem" : "0"}
     >

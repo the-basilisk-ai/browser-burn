@@ -4,11 +4,8 @@
 
   export let className: string = "";
 
-  theme.subscribe((value) => (themeValue = value));
-  $: themeValue = $theme;
-
   const toggleMode = () => {
-    theme.set(themeValue.key === DARK_MODE ? LIGHT_MODE : DARK_MODE);
+    theme.set($theme.key === DARK_MODE ? LIGHT_MODE : DARK_MODE);
   };
 </script>
 
@@ -23,11 +20,11 @@
     width="24"
     height="24"
     viewBox="0 0 24 24"
-    fill={themeValue.textBrand}
+    fill={$theme.textBrand}
     xmlns="http://www.w3.org/2000/svg"
     focusable="false"
   >
-    {#if themeValue.key === DARK_MODE}
+    {#if $theme.key === DARK_MODE}
       <path
         d="M19.4999 12.6583C19.3688 14.0768 18.8365 15.4287 17.9651 16.5557C17.0938 17.6826 15.9195 18.5382 14.5797 19.0221C13.2398 19.5061 11.7899 19.5984 10.3995 19.2884C9.0091 18.9784 7.73575 18.2788 6.72844 17.2715C5.72113 16.2642 5.02153 14.9908 4.71151 13.6004C4.40148 12.21 4.49385 10.7601 4.9778 9.42025C5.46175 8.08042 6.31728 6.90614 7.44426 6.03479C8.57125 5.16345 9.92308 4.63109 11.3416 4.5C10.5111 5.62356 10.1115 7.00787 10.2154 8.40118C10.3193 9.79448 10.9198 11.1042 11.9078 12.0922C12.8957 13.0801 14.2054 13.6807 15.5987 13.7846C16.992 13.8885 18.3764 13.4888 19.4999 12.6583Z"
         stroke="current"

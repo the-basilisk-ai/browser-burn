@@ -7,13 +7,6 @@
   import Loading from "./Loading.svelte";
   import Message from "./Message.svelte";
 
-  theme.subscribe((value) => (themeValue = value));
-  isLoading.subscribe((value) => (isLoadingValue = value));
-  roast.subscribe((value) => (roastValue = value));
-  $: themeValue = $theme;
-  $: isLoadingValue = $isLoading;
-  $: roastValue = $roast;
-
   let error: string | null = null;
 
   const loadingMessage =
@@ -32,15 +25,15 @@
 
 <div
   class="w-7/12 max-w-7xl p-5 rounded-[10px]"
-  style:background-color={themeValue.bgRoast}
-  style:color={themeValue.textRoast}
+  style:background-color={$theme.bgRoast}
+  style:color={$theme.textRoast}
 >
-  {#if isLoadingValue}
+  {#if $isLoading}
     <Loading message={loadingMessage} />
   {:else if error}
     <Message text={error} />
   {:else}
-    <Message text={roastValue} />
+    <Message text={$roast} />
     <p class="font-bold mt-5">Sincerely, your browsing history</p>
   {/if}
 </div>

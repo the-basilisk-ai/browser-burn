@@ -3,8 +3,6 @@
   import { theme } from "../stores/theme";
   import { onMount } from "svelte";
 
-  theme.subscribe((value) => (themeValue = value));
-  $: themeValue = $theme;
   display24HClock.subscribe((value) => (display24HClockValue = value));
   $: display24HClockValue = $display24HClock;
 
@@ -29,7 +27,7 @@
 </script>
 
 {#await initClock then}
-  <div class="text-[2.625rem] font-bold" style:color={themeValue.textBrand}>
+  <div class="text-[2.625rem] font-bold" style:color={$theme.textBrand}>
     {hours}:{minutes}
   </div>
 {/await}

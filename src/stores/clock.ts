@@ -10,7 +10,6 @@ const createDisplay24HClock = () => {
 
   const restore = async () => {
     const result = await getFromSyncStorage();
-    console.log('restore', result);
     const storedValue: boolean = result[use24hKey];
 
     if (storedValue) {
