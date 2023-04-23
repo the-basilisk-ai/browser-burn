@@ -1,10 +1,15 @@
 {
     "name": "BrowserBurn",
-    "short_name": "BB",
-    "description": "Spice up your new tab page with BrowserBurn, where humor meets history!",
-    "version": "0.1",
+    "short_name": "BB🌐🔥",
+    "description": "Replaces your new tab page with spicy roasts based on your recent browsing history - a unique and fun way to browse every day!",
+    "version": "1",
     "author": "BasiliskAI",
     "minimum_chrome_version": "104",
+    "icons": {
+        "16": "icon_16.svg",
+        "48": "icon_48_128.svg",
+        "128": "icon_48_128.svg"
+    },
     "manifest_version": 3,
     "host_permissions": [
         "https://api.openai.com/v1/chat/completions"
