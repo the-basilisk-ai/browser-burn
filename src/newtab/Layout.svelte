@@ -12,6 +12,7 @@
   import Roast from "../components/Roast.svelte";
   import ShareCard from "../components/Share/ShareCard.svelte";
   import PoweredBy from "../components/PoweredBy.svelte";
+  import Navigation from "../components/Navigation/Navigation.svelte";
   import ModeToggle from "../components/ModeToggle.svelte";
 
   const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -33,7 +34,6 @@
   class="flex flex-col items-center min-h-screen"
   style={`background: linear-gradient(90deg, ${themeValue.bgGradientFrom} 0%, ${themeValue.bgGradientTo} 100%);`}
 >
-  <ModeToggle />
   <div
     class="flex flex-col items-center w-full max-w-screen-2xl min-h-screen bg-gradient text-zinc-800"
   >
@@ -46,8 +46,9 @@
       <Roast />
       <ShareCard />
     </div>
-    <div class="self-start px-6 pb-6">
+    <div class="flex w-full px-6 pb-6">
       <PoweredBy />
+      <Navigation />
     </div>
   </div>
 </div>

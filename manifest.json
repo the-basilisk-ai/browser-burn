@@ -11,7 +11,8 @@
     ],
     "permissions": [
         "history",
-        "storage"
+        "storage",
+        "tabs"
     ],
     "chrome_url_overrides": {
         "newtab": "src/newtab/index.html"

@@ -14,7 +14,7 @@
   roast.subscribe((value) => (roastValue = value));
 
   let shareText = "I just got roasted by my browsing history on BrowserBurn!";
-  let shareCardElement;
+  let shareCardElement: HTMLElement;
 
   let shareCardIsOpen = false;
   const openShareCard = () => (shareCardIsOpen = true);

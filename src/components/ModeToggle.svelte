@@ -10,7 +10,7 @@
   };
 </script>
 
-<div class="absolute left-1/2 -ml-3 top-8">
+<div>
   <button on:click={toggleMode} type="button" aria-label="toggle color mode">
     <svg
       width="24"
