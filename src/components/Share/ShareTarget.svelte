@@ -1,16 +1,27 @@
 <script lang="ts">
   import { theme } from "../../stores/theme";
 
-  export let href: string;
+  export let onClick: () => void;
   export let name: string;
-  export let target: string = "_blank";
+
+  const handleKeyUp = (e: Event) => {
+    if (e instanceof KeyboardEvent && e.key === "Enter") {
+      onClick();
+    }
+  };
 
   let backgroundElem: HTMLElement;
   const handleMouseOver = () => backgroundElem.classList.add("hover");
   const handleMouseOut = () => backgroundElem.classList.remove("hover");
 </script>
 
-<a {href} {target} rel="noopener" aria-label={name}>
+<button
+  type="button"
+  on:click={onClick}
+  on:keyup={handleKeyUp}
+  aria-label={name}
+  class="target cursor-pointer"
+>
   <div
     bind:this={backgroundElem}
     class="background flex items-center justify-center rounded-full"
@@ -31,14 +42,14 @@
   <div class="text-xs text-center w-full mt-2" style:color={$theme.textShare}>
     {name}
   </div>
-</a>
+</button>
 
 <style>
   /* Hack, pushes a style into the global namespace but it's scoped to
-     THIS specific component instance at runtime because of the `a >`.
+     THIS specific component instance at runtime because of the `button.target >`.
      This is required because Svelte wants to prune classes that aren't
      statically referenced. */
-  a > :global(.hover) {
+  button.target > :global(.hover) {
     filter: brightness(120%);
     scale: 110%;
   }

@@ -74,7 +74,7 @@
       <!-- content -->
       <div
         bind:this={modalElement}
-        class="relative rounded-[10px] shadow-2xl shadow-gray-900/20 pb-8"
+        class="relative rounded-[10px] shadow-2xl shadow-gray-900/20 pb-2"
         style:background-color={$theme.bgRoast}
       >
         <!-- header -->
