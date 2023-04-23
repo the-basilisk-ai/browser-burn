@@ -1,12 +1,11 @@
 <script lang="ts">
-  import type { Theme } from "../constants/theme";
   import { theme } from "../stores/theme";
   import { onMount } from "svelte";
 
   export let use24h: boolean = false;
 
-  let themeValue: Theme;
   theme.subscribe((value) => (themeValue = value));
+  $: themeValue = $theme;
 
   const padZero = (num: number) => (num < 10 ? `0${num}` : num);
 

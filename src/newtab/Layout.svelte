@@ -4,7 +4,7 @@
   import "@fontsource/cormorant-garamond/latin-500.css";
   import { onMount } from "svelte";
 
-  import { DARK_MODE, LIGHT_MODE, type Theme } from "../constants/theme";
+  import { DARK_MODE, LIGHT_MODE } from "../constants/theme";
   import { theme } from "../stores/theme";
 
   import Logo from "../components/Logo.svelte";
@@ -13,7 +13,6 @@
   import ShareCard from "../components/Share/ShareCard.svelte";
   import PoweredBy from "../components/PoweredBy.svelte";
   import Navigation from "../components/Navigation/Navigation.svelte";
-  import ModeToggle from "../components/ModeToggle.svelte";
 
   const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
   const handleThemeChange = (e: MediaQueryList | MediaQueryListEvent) => {
@@ -26,8 +25,8 @@
     return () => darkModeQuery.removeEventListener("change", handleThemeChange);
   });
 
-  let themeValue: Theme;
   theme.subscribe((value) => (themeValue = value));
+  $: themeValue = $theme;
 </script>
 
 <div

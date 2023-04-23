@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { LIGHT_MODE, DARK_MODE, type Theme } from "../constants/theme";
+  import { LIGHT_MODE, DARK_MODE } from "../constants/theme";
   import { theme } from "../stores/theme";
 
   export let className: string = "";
 
-  let themeValue: Theme;
   theme.subscribe((value) => (themeValue = value));
+  $: themeValue = $theme;
 
   const toggleMode = () => {
     theme.set(themeValue.key === DARK_MODE ? LIGHT_MODE : DARK_MODE);

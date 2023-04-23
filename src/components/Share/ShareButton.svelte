@@ -1,12 +1,11 @@
 <script lang="ts">
-  import type { Theme } from "../../constants/theme";
   import { theme } from "../../stores/theme";
 
   export let disabled: boolean = true;
   export let onClick: () => void;
 
-  let themeValue: Theme;
   theme.subscribe((value) => (themeValue = value));
+  $: themeValue = $theme;
 
   const handleKeyUp = (e: KeyboardEvent) => {
     if (e.key === "Enter" || e.key === "Space") {

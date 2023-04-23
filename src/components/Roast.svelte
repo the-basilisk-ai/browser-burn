@@ -1,20 +1,18 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import loadingMessages from "../constants/loadingMessages";
-  import type { Theme } from "../constants/theme";
   import { theme } from "../stores/theme";
   import { isLoading, roast } from "../stores/api";
   import { getRoast } from "../api/roast";
   import Loading from "./Loading.svelte";
   import Message from "./Message.svelte";
 
-  let themeValue: Theme;
   theme.subscribe((value) => (themeValue = value));
-
-  let isLoadingValue: boolean;
-  let roastValue: string;
   isLoading.subscribe((value) => (isLoadingValue = value));
   roast.subscribe((value) => (roastValue = value));
+  $: themeValue = $theme;
+  $: isLoadingValue = $isLoading;
+  $: roastValue = $roast;
 
   let error: string | null = null;
 

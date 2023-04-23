@@ -1,13 +1,12 @@
 <script lang="ts">
   import { theme } from "../../stores/theme";
-  import type { Theme } from "../../constants/theme";
 
   export let href: string;
   export let name: string;
   export let target: string = "_blank";
 
-  let themeValue: Theme;
   theme.subscribe((value) => (themeValue = value));
+  $: themeValue = $theme;
 
   let backgroundElem: HTMLElement;
   const handleMouseOver = () => backgroundElem.classList.add("hover");

@@ -1,11 +1,10 @@
 <script lang="ts">
-  import type { Theme } from "../constants/theme";
   import { theme } from "../stores/theme";
 
   export let message: string;
 
-  let themeValue: Theme;
   theme.subscribe((value) => (themeValue = value));
+  $: themeValue = $theme;
 </script>
 
 <div role="status" class="space-y-3 animate-pulse">

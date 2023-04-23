@@ -1,9 +1,8 @@
 <script lang="ts">
-  import type { Theme } from "../constants/theme";
   import { theme } from "../stores/theme";
 
-  let themeValue: Theme;
   theme.subscribe((value) => (themeValue = value));
+  $: themeValue = $theme;
 </script>
 
 <div class="text-base text-[#475284]" style:color={themeValue.textBrand}>

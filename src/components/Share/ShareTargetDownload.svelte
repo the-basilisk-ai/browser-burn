@@ -1,12 +1,11 @@
 <script lang="ts">
   import { theme } from "../../stores/theme";
-  import type { Theme } from "../../constants/theme";
 
   export let onClick: () => void;
   export let name: string;
 
-  let themeValue: Theme;
   theme.subscribe((value) => (themeValue = value));
+  $: themeValue = $theme;
 
   const handleKeyUp = (e: Event) => {
     if (e instanceof KeyboardEvent && e.key === "Enter") {
@@ -19,7 +18,8 @@
   const handleMouseOut = () => backgroundElem.classList.remove("hover");
 </script>
 
-<div
+<button
+  type="button"
   on:click={onClick}
   on:keyup={handleKeyUp}
   aria-label={name}
@@ -48,7 +48,7 @@
   >
     {name}
   </div>
-</div>
+</button>
 
 <style>
   /* Hack, pushes a style into the global namespace but it's scoped to

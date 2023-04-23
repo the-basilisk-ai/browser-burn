@@ -3,8 +3,8 @@
   import type { Theme } from "../constants/theme";
   import { theme } from "../stores/theme";
 
-  let themeValue: Theme;
   theme.subscribe((value) => (themeValue = value));
+  $: themeValue = $theme;
 
   // Create a LogoSvg component and get the markup from it
   // Allows us to use the theme color in the SVG

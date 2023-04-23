@@ -1,13 +1,12 @@
 <script lang="ts">
-  import type { Theme } from "../../constants/theme";
   import { theme } from "../../stores/theme";
   import ModeToggle from "../ModeToggle.svelte";
   import NavigationSvg from "./NavigationSvg.svelte";
 
   export let className: string = "";
 
-  let themeValue: Theme;
   theme.subscribe((value) => (themeValue = value));
+  $: themeValue = $theme;
 
   const settingsUrl = "chrome://settings";
   const bookmarksUrl = "chrome://bookmarks";
