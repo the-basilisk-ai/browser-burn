@@ -12,6 +12,7 @@
 
 Note that any code changes you make will not be automatically applied when installing the extension this way. But, it does mean you don't have to run the dev server.
 
+- Install dependencies `npm install`
 - Build the application `npm run build`
 - Visit the Extensions page in your browser, remove any existing version, click Load Unpacked, and choose the `dist` directory
 
