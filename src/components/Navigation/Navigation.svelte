@@ -6,8 +6,6 @@
 
   export let className: string = "";
 
-  let mouseOver = false;
-
   const settingsUrl = "chrome://settings";
   const bookmarksUrl = "chrome://bookmarks";
   const historyUrl = "chrome://history";
@@ -27,28 +25,16 @@
   $: handleKeyUpHistory = (e: KeyboardEvent) => handleKeyUp(e, historyUrl);
 </script>
 
-<nav
-  class={className}
-  style:color={$theme.textBrand}
-  on:mouseenter={() => (mouseOver = true)}
-  on:focus={() => (mouseOver = true)}
-  on:mouseleave={() => (mouseOver = false)}
-  on:blur={() => (mouseOver = false)}
->
+<nav class={className} style:color={$theme.textBrand}>
   <div
     class="flex items-center rounded-md p-2 pl-3 pr-3 space-x-2 h-10"
     style:background-color={$theme.bgRoast}
   >
-    {#if mouseOver}
-      <ModeToggle className="pr-1" />
-      <ClockToggle className="pr-1" />
-    {/if}
+    <ModeToggle className="pr-1" />
+    <ClockToggle className="pr-1" />
     <div
-      class="flex items-center space-x-2"
-      style:border-left={mouseOver
-        ? `2px solid ${$theme.navigationDivider}`
-        : "none"}
-      style:padding-left={mouseOver ? "0.75rem" : "0"}
+      class="flex items-center space-x-2 pl-3 border-l-2"
+      style:border-color={$theme.navigationDivider}
     >
       <button
         type="button"
