@@ -24,8 +24,12 @@
 
     return () => clearInterval(interval);
   });
+
+  let initClock = display24HClock.restore();
 </script>
 
-<div class="text-[2.625rem] font-bold" style:color={themeValue.textBrand}>
-  {hours}:{minutes}
-</div>
+{#await initClock then}
+  <div class="text-[2.625rem] font-bold" style:color={themeValue.textBrand}>
+    {hours}:{minutes}
+  </div>
+{/await}

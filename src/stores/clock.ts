@@ -6,16 +6,23 @@ const setInSyncStorage = (display24h: boolean) => chrome.storage.sync.set({ [use
 const getFromSyncStorage = () => new Promise(resolve => chrome.storage.sync.get([use24hKey], resolve));
 
 const createDisplay24HClock = () => {
-  let syncedValue: boolean;
-  getFromSyncStorage()
-    .then((result) => syncedValue = result[use24hKey]);
+  const { subscribe, set } = writable<boolean>(false);
 
-  if (syncedValue) {
-    console.debug("Restored 12h/24h clock from synced storage:", syncedValue);
-  }
+  const restore = async () => {
+    const result = await getFromSyncStorage();
+    console.log('restore', result);
+    const storedValue: boolean = result[use24hKey];
 
-  const { subscribe, set } = writable<boolean>(syncedValue || false);
+    if (storedValue) {
+      console.debug("Restored clock mode from local storage:", storedValue);
+      set(storedValue);
+    } else {
+      console.debug("No clock mode found in local storage, using default (12h)");
+    }
+  };
+
   return {
+    restore,
     subscribe,
     set: (display24h: boolean) => {
       set(display24h);
