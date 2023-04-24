@@ -10,7 +10,7 @@
   const bookmarksUrl = "chrome://bookmarks";
   const historyUrl = "chrome://history";
 
-  const openLocalUrl = (url: string) => chrome.tabs.create({ url });
+  const openLocalUrl = (url: string) => chrome.tabs.update({ url });
   const handleKeyUp = async (e: KeyboardEvent, url: string) => {
     if (e.key === "Enter" || e.key === "Space") {
       await openLocalUrl(url);
