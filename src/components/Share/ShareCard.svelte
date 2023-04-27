@@ -5,7 +5,6 @@
   import ShareButton from "./ShareButton.svelte";
   import ShareTargets from "./ShareTargets.svelte";
 
-  let shareText = "I just got roasted by my browsing history on BrowserBurn!";
   let shareCardElement: HTMLElement;
 
   let shareCardIsOpen = false;
@@ -132,7 +131,7 @@
           </div>
           <div />
           <div>
-            <ShareTargets {shareText} {shareCardElement} />
+            <ShareTargets {shareCardElement} />
           </div>
         </div>
       </div>

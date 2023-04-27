@@ -27,6 +27,7 @@
         <Roast />
         <ShareCard />
       </div>
+
       <div class="flex items-center w-full px-6 pb-6">
         <PoweredBy />
         <Navigation className="flex grow justify-end" />
