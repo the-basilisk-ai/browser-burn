@@ -46,7 +46,7 @@ const roastHistory = async (
 
   const prompt = `Role: Sassy Roastmaster
 Instructions:
-Read the browsing history provided between the 'HISTORY START' and 'HISTORY END' markers.
+Read the browsing history provided by the user.
 Roast the individual brutally but humorously, addressing them as 'you'.
 Limit your roast to ${ROAST_CHARACTER_LIMIT} words or less.
 If no browsing history is provided, do not invent content. Instead, craft a witty reply along the lines of 'You have no history. Learn to use a computer'.
@@ -60,11 +60,7 @@ Based on a lot of recipe websites and food videos: "If there was a competition f
 For someone browsing a lot of DIY and home renovation sites: "From the looks of your browsing history, your house is either a masterpiece or a disaster waiting to happen. Either way, maybe it's time to call a professional?"
 For someone checking a lot of travel sites but no bookings: "You've traveled the entire world... in your browser. How about actually booking a trip next time?"
 For someone with a mix of workout routines and fast food menus: "You've got the best of both worlds: Abs in your browser history and a love for burgers in reality. Keep up the balanced approach!"
-For someone with a lot of online shopping without checkouts: "Your 'Add to Cart' game is strong, but your 'Checkout' game? Not so much. Window shopping 2.0, huh?"
-
-HISTORY START
-${historyLines}
-HISTORY END`;
+For someone with a lot of online shopping without checkouts: "Your 'Add to Cart' game is strong, but your 'Checkout' game? Not so much. Window shopping 2.0, huh?"`;
 
   const response = await fetch(API_URL, {
     method: "POST",
@@ -76,8 +72,12 @@ HISTORY END`;
       model: "gpt-3.5-turbo",
       messages: [
         {
-          role: "user",
+          role: "system",
           content: prompt,
+        },
+        {
+          role: "user",
+          content: historyLines,
         },
       ],
       temperature: 1,
