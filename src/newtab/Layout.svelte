@@ -23,7 +23,9 @@
         <Clock />
       </div>
 
-      <div class="flex flex-col grow items-center h-full w-full gap-8 pt-14">
+      <div
+        class="flex flex-col grow items-center h-full w-full gap-8 justify-center"
+      >
         <Roast />
         <ShareCard />
       </div>
