@@ -15,6 +15,7 @@
   // roast.set(
   //   "You've been busy, haven't you? From CSS to AI to pipelines, it's almost like you're trying hard, but not hard enough. Keep trying!"
   // );
+  // setTimeout(() => isLoading.set(false), 1000);
 
   onMount(async () => {
     getRoast();

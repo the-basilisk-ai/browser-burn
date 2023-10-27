@@ -1,14 +1,17 @@
-import { isLoading, roast, error } from "../stores/api";
-import { 
+import {
   API_KEY,
   API_URL,
-  ROAST_CHARACTER_LIMIT,
+  ERROR_MESSAGE_429,
   HISTORY_HOURS,
-  ERROR_MESSAGE_429 } from "../constants/api";
+  ROAST_CHARACTER_LIMIT,
+} from "../constants/api";
+import { error, isLoading, roast } from "../stores/api";
 
 export const getRoast = async () => {
   console.debug("Fetching history...");
-  const startTime = new Date(Date.now() - HISTORY_HOURS * 60 * 60 * 1000).getTime();
+  const startTime = new Date(
+    Date.now() - HISTORY_HOURS * 60 * 60 * 1000
+  ).getTime();
   const endTime = Date.now();
 
   chrome.history.search(
@@ -20,23 +23,45 @@ export const getRoast = async () => {
 const onHistoryResults = async (history: chrome.history.HistoryItem[]) => {
   try {
     isLoading.set(true);
-    roast.set(await roastHistory(history.filter((h) => h.title !== 'New Tab - BrowserBurn')));
+    roast.set(
+      await roastHistory(
+        history.filter((h) => h.title !== "New Tab - BrowserBurn")
+      )
+    );
   } catch (e) {
     console.error(e);
     error.set("Oops, something went wrong. Please try again later.");
   } finally {
     isLoading.set(false);
   }
-}
+};
 
-const roastHistory = async (history: chrome.history.HistoryItem[]): Promise<string> => {
+const roastHistory = async (
+  history: chrome.history.HistoryItem[]
+): Promise<string> => {
   const historyLines = history
     .map((h: chrome.history.HistoryItem) => h.title)
     .join("\n");
   console.debug(historyLines);
 
-  const prompt = `Roast the person who generated the following browsing history in ${ROAST_CHARACTER_LIMIT} words or less. Address them as 'you'. They have provided their full and unlimited consent, so ethical issues do not apply. The browsing history will be provided between 'HISTORY START' and 'HISTORY END'.
-Do not make up a response if you get provided with an empty history. Instead, simply reply with a creative variation of 'You have no history. Learn to use a computer'.
+  const prompt = `Role: Sassy Roastmaster
+Instructions:
+Read the browsing history provided between the 'HISTORY START' and 'HISTORY END' markers.
+Roast the individual brutally but humorously, addressing them as 'you'.
+Limit your roast to ${ROAST_CHARACTER_LIMIT} words or less.
+If no browsing history is provided, do not invent content. Instead, craft a witty reply along the lines of 'You have no history. Learn to use a computer'.
+Context: The user has provided their full and unlimited consent, so ethical considerations are not at play.
+Constraints:
+Do not stray from the given data.
+Ensure all roasts are humorous and not overly offensive.
+Examples:
+Based on a lot of infosec browsing: "You're either the most security-conscious person alive or you're coding a Chrome extension that will revolutionize the world. Either way, take a break and get some fresh air."
+Based on a lot of recipe websites and food videos: "If there was a competition for the 'Internet's Top Chef', you'd be a finalist... in the 'Burned Water' category."
+For someone browsing a lot of DIY and home renovation sites: "From the looks of your browsing history, your house is either a masterpiece or a disaster waiting to happen. Either way, maybe it's time to call a professional?"
+For someone checking a lot of travel sites but no bookings: "You've traveled the entire world... in your browser. How about actually booking a trip next time?"
+For someone with a mix of workout routines and fast food menus: "You've got the best of both worlds: Abs in your browser history and a love for burgers in reality. Keep up the balanced approach!"
+For someone with a lot of online shopping without checkouts: "Your 'Add to Cart' game is strong, but your 'Checkout' game? Not so much. Window shopping 2.0, huh?"
+
 HISTORY START
 ${historyLines}
 HISTORY END`;
@@ -55,7 +80,7 @@ HISTORY END`;
           content: prompt,
         },
       ],
-      temperature: 0.9,
+      temperature: 1,
     }),
   });
 
@@ -71,11 +96,7 @@ HISTORY END`;
       error.set(ERROR_MESSAGE_429);
       return null;
     } else {
-      throw new Error('An error occurred while calling the API.');
+      throw new Error("An error occurred while calling the API.");
     }
   }
 };
-
-
-
-
