@@ -24,7 +24,7 @@
       </div>
 
       <div
-        class="flex flex-col grow items-center h-full w-full gap-8 justify-center"
+        class="flex flex-col grow h-full w-full gap-8 items-center justify-center"
       >
         <Roast />
         <ShareCard />
