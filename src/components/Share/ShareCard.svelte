@@ -4,6 +4,7 @@
   import { theme } from "../../stores/theme";
   import ShareButton from "./ShareButton.svelte";
   import ShareTargets from "./ShareTargets.svelte";
+  import Logo from "../Logo.svelte";
 
   let shareCardElement: HTMLElement;
 
@@ -114,19 +115,20 @@
             style:border-color={$theme.bgLoading.light}
           >
             <div
-              class="w-full max-w-xl mx-auto rounded-lg shadow-lg px-5 pt-5 pb-8"
+              class="w-full max-w-xl mx-auto rounded-lg shadow-lg px-5 pt-5 pb-5"
               style:background-color={$theme.bgRoast}
               style:color={$theme.textRoast}
             >
               <div class="w-full font-serif text-3xl">
                 <div>“</div>
                 <p class="text-xl text-center">{$roast}</p>
-                <div class="text-3xl text-right mt-3">”</div>
+                <div class="text-right mt-3">”</div>
               </div>
-              <div class="w-full text-center">
-                <p class="text-md font-bold">Get Roasted</p>
-                <p class="text-xs">basiliskai.com/browserburn 🐍</p>
-              </div>
+              <p class="w-full text-center -mt-2 text-xs">
+                <span class="font-bold">Get Roasted 🔥️</span>
+                <br />
+                Download BrowserBurn from the Chrome Web Store
+              </p>
             </div>
           </div>
           <div />
