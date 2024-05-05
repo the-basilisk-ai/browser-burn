@@ -4,7 +4,7 @@
   import Clock from "../components/Clock.svelte";
   import Roast from "../components/Roast.svelte";
   import ShareCard from "../components/Share/ShareCard.svelte";
-  import PoweredBy from "../components/PoweredBy.svelte";
+  import BuyMeACoffee from "../components/BuyMeACoffee.svelte";
   import Navigation from "../components/Navigation/Navigation.svelte";
 
   let themeInit = theme.restore();
@@ -31,7 +31,7 @@
       </div>
 
       <div class="flex items-center w-full px-6 pb-6">
-        <PoweredBy />
+        <BuyMeACoffee />
         <Navigation className="flex grow justify-end" />
       </div>
     </div>

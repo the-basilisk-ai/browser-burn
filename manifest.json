@@ -1,26 +1,22 @@
 {
-    "name": "BrowserBurn",
-    "short_name": "BB🌐🔥",
-    "description": "Replaces your new tab page with spicy roasts based on your recent browsing history - a unique and fun way to browse every day!",
-    "version": "1.0",
-    "author": "BasiliskAI",
-    "minimum_chrome_version": "104",
-    "icons": {
-        "16": "icon.png",
-        "32": "icon.png",
-        "48": "icon.png",
-        "128": "icon.png"
-    },
-    "manifest_version": 3,
-    "host_permissions": [
-        "https://api.openai.com/v1/chat/completions"
-    ],
-    "permissions": [
-        "history",
-        "storage",
-        "tabs"
-    ],
-    "chrome_url_overrides": {
-        "newtab": "src/newtab/index.html"
-    }
+  "name": "BrowserBurn",
+  "short_name": "BB🌐🔥",
+  "description": "Replaces your new tab page with spicy roasts based on your recent browsing history - a unique and fun way to browse every day!",
+  "version": "1.2.1",
+  "author": "BasiliskAI",
+  "minimum_chrome_version": "104",
+  "icons": {
+    "16": "icon.png",
+    "32": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "manifest_version": 3,
+  "host_permissions": [
+    "https://ddzqz505u9.execute-api.eu-west-2.amazonaws.com/prod/burn"
+  ],
+  "permissions": ["history", "storage", "tabs"],
+  "chrome_url_overrides": {
+    "newtab": "src/newtab/index.html"
+  }
 }
