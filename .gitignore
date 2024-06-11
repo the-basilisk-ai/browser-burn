@@ -168,3 +168,6 @@ package
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,svelte,node
+
+# macOS
+.DS_Store

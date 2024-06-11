@@ -1,11 +1,11 @@
-<script>
-  const datestamp = new Date().toISOString().split("T")[0];
-</script>
-
-<a href="https://www.buymeacoffee.com/browserburn">
+<a
+  class="buyButton opacity-50 hover:opacity-100 py-2 px-4 rounded-md bg-[#fd0] items-center inline-flex no-underline h-10"
+  href="https://www.buymeacoffee.com/browserburn"
+>
   <img
-    class="scale-75 opacity-50 hover:opacity-100"
-    alt="button"
-    src={`https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=browserburn&button_colour=FFDD00&font_colour=000000&font_family=Lato&outline_colour=000000&coffee_colour=ffffff?datestamp=${datestamp}`}
+    class="coffeeImage h-5"
+    src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+    alt="Buy me a coffee"
   />
+  <span class="ml-3 text-sm">Buy me a coffee</span>
 </a>
