@@ -2,7 +2,7 @@
   "name": "BrowserBurn",
   "short_name": "BB🌐🔥",
   "description": "Replaces your new tab page with spicy roasts based on your recent browsing history - a unique and fun way to browse every day!",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "author": "BasiliskAI",
   "minimum_chrome_version": "104",
   "icons": {
