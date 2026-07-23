@@ -28,4 +28,4 @@ We may update this Privacy Policy from time to time. We will post any changes to
 
 ## 6. Contact Us
 
-If you have any questions about this Privacy Policy or our practices, please contact us at hello@meetsquad.ai.
+If you have any questions about this Privacy Policy or our practices, please contact us at privacy@meetsquad.ai.
