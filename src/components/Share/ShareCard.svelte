@@ -1,6 +1,7 @@
 <script lang="ts">
   import {afterUpdate} from "svelte";
   import {isLoading, isStreaming, roast, error} from "../../stores/api";
+  import {isTyping} from "../../stores/typewriter";
   import {theme} from "../../stores/theme";
   import ShareButton from "./ShareButton.svelte";
   import ShareTargets from "./ShareTargets.svelte";
@@ -61,7 +62,7 @@
 
 <!-- Modal toggle -->
 {#if !$error}
-  <ShareButton disabled={$isLoading || $isStreaming} onClick={openShareCard}/>
+  <ShareButton disabled={$isLoading || $isStreaming || $isTyping} onClick={openShareCard}/>
 {/if}
 
 {#if shareCardIsOpen}
