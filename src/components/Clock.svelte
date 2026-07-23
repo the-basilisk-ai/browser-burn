@@ -1,6 +1,6 @@
 <script lang="ts">
   import { display24HClock } from "../stores/clock";
-  import { theme } from "../stores/theme";
+  import { effectiveTheme as theme } from "../stores/effectiveTheme";
   import { onMount } from "svelte";
 
   const padZero = (num: number) => (num < 10 ? `0${num}` : num);

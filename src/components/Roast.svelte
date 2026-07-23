@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
   import loadingMessages from "../constants/loadingMessages";
-  import { theme } from "../stores/theme";
+  import { effectiveTheme as theme } from "../stores/effectiveTheme";
   import { isLoading, isStreaming, error } from "../stores/api";
   import { displayedRoast, isTyping } from "../stores/typewriter";
   import { getRoast } from "../api/roast";
@@ -27,9 +27,11 @@
 </script>
 
 <div
-  class="w-7/12 max-w-7xl rounded-[10px] overflow-hidden roast-container"
+  class="w-7/12 max-w-7xl rounded-[10px] overflow-hidden border roast-container"
   style:background-color={$theme.bgRoast}
   style:color={$theme.textRoast}
+  style:border-color={$theme.surfaceBorder}
+  style:box-shadow={$theme.surfaceShadow}
   style:height={contentHeight ? `${contentHeight}px` : "auto"}
 >
   <div class="p-5" bind:clientHeight={contentHeight}>
@@ -43,7 +45,7 @@
         streaming={$isStreaming || $isTyping}
       />
       {#if !$isStreaming && !$isTyping}
-        <p in:fade={{ duration: 400 }} class="font-bold mt-5">
+        <p in:fade={{ duration: 400 }} class="font-bold mt-5 text-xs">
           Sincerely, your browsing history
         </p>
       {/if}

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { theme } from "../stores/theme";
+  import { effectiveTheme as theme } from "../stores/effectiveTheme";
 
   export let message: string;
 

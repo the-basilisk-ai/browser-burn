@@ -1,5 +1,6 @@
 <script lang="ts">
   import { theme } from "../stores/theme";
+  import { background, pageBackground } from "../stores/background";
   import Logo from "../components/Logo.svelte";
   import Clock from "../components/Clock.svelte";
   import Roast from "../components/Roast.svelte";
@@ -7,13 +8,13 @@
   import BuyMeACoffee from "../components/BuyMeACoffee.svelte";
   import Navigation from "../components/Navigation/Navigation.svelte";
 
-  let themeInit = theme.restore();
+  let themeInit = Promise.all([theme.restore(), background.restore()]);
 </script>
 
 {#await themeInit then}
   <div
-    class="flex flex-col items-center min-h-screen"
-    style={`background: linear-gradient(90deg, ${$theme.bgGradientFrom} 0%, ${$theme.bgGradientTo} 100%);`}
+    class="flex flex-col items-center min-h-screen page-background"
+    style:background-color={$pageBackground}
   >
     <div
       class="flex flex-col items-center w-full max-w-screen-2xl min-h-screen bg-gradient text-zinc-800"
@@ -41,5 +42,15 @@
 <style>
   :global(body) {
     font-family: "Inter", sans-serif;
+  }
+
+  .page-background {
+    transition: background-color 300ms ease-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .page-background {
+      transition: none;
+    }
   }
 </style>
