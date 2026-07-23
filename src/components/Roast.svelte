@@ -45,7 +45,7 @@
         streaming={$isStreaming || $isTyping}
       />
       {#if !$isStreaming && !$isTyping}
-        <p in:fade={{ duration: 400 }} class="font-bold mt-5 text-sm">
+        <p in:fade={{ duration: 400 }} class="font-bold mt-5 text-xs">
           Sincerely, your browsing history
         </p>
       {/if}
