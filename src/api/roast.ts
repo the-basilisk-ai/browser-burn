@@ -1,5 +1,5 @@
-import { API_URL, HISTORY_HOURS } from "../constants/api";
-import { error, isLoading, roast } from "../stores/api";
+import { API_URL, STREAM_API_URL, HISTORY_HOURS } from "../constants/api";
+import { error, isLoading, isStreaming, roast } from "../stores/api";
 
 export const getRoast = async () => {
   console.debug("Fetching history...");
@@ -27,6 +27,7 @@ const onHistoryResults = async (history: chrome.history.HistoryItem[]) => {
     error.set("Oops, something went wrong. Please try again later.");
   } finally {
     isLoading.set(false);
+    isStreaming.set(false);
   }
 };
 
@@ -38,6 +39,56 @@ const roastHistory = async (
     .join("\n");
   console.debug(historyLines);
 
+  try {
+    return await streamRoast(historyLines);
+  } catch (e) {
+    console.warn("Stream failed, falling back to buffered endpoint", e);
+    isStreaming.set(false);
+    return await bufferedRoast(historyLines);
+  }
+};
+
+const streamRoast = async (historyLines: string): Promise<string> => {
+  const response = await fetch(STREAM_API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      historyLines,
+    }),
+  });
+
+  if (!response.ok || !response.body) {
+    console.error(await response.text());
+    throw new Error(`Stream API error: ${response.status}`);
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let text = "";
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    text += decoder.decode(value, { stream: true });
+    if (text.length > 0) {
+      isLoading.set(false);
+      isStreaming.set(true);
+      roast.set(text);
+    }
+  }
+  text += decoder.decode();
+
+  if (!text) {
+    throw new Error("Stream returned no content");
+  }
+  console.debug(text);
+
+  return text;
+};
+
+const bufferedRoast = async (historyLines: string): Promise<string> => {
   const response = await fetch(API_URL, {
     method: "POST",
     headers: {

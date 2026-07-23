@@ -2,7 +2,7 @@
   "name": "BrowserBurn",
   "short_name": "BB🌐🔥",
   "description": "Replaces your new tab page with spicy roasts based on your recent browsing history - a unique and fun way to browse every day!",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "author": "BasiliskAI",
   "minimum_chrome_version": "104",
   "icons": {
@@ -13,7 +13,8 @@
   },
   "manifest_version": 3,
   "host_permissions": [
-    "https://ddzqz505u9.execute-api.eu-west-2.amazonaws.com/prod/burn"
+    "https://ddzqz505u9.execute-api.eu-west-2.amazonaws.com/prod/burn",
+    "https://nam5v7o2loht7eea6spgacrs640yhmaf.lambda-url.eu-west-2.on.aws/"
   ],
   "permissions": ["history", "storage"],
   "chrome_url_overrides": {
