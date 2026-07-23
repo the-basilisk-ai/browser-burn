@@ -1,6 +1,6 @@
 # Privacy policy
 
-At BasiliskAI, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and disclose information when you use our BrowserBurn Chrome Extension ("Extension"). By using the Extension, users agree to these terms.
+At Squad, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and disclose information when you use our BrowserBurn Chrome Extension ("Extension"). By using the Extension, users agree to these terms.
 
 ## 1. Information We Collect and How We Use It
 
@@ -8,7 +8,7 @@ We do not store or collect any personally identifiable information about our use
 
 The Extension uses local browser storage to save the users' preference for dark/light mode and 12/24 hour clock display. This information is stored locally on a users device, and we do not have access to it.
 
-It is important to note that the OpenAI v1 chat completions API is used to generate roast content based on page titles accessed by the Extension. Users should refer to the OpenAI Privacy Policy document for information on how they collect, use, and disclose information. BasiliskAI takes no responsibility for data handling by OpenAI once data has been transferred from the Extension to OpenAI via API.
+Roast content is generated using open-weights AI models hosted on [Nscale](https://www.nscale.com/) Serverless Inference, a privacy-respecting sovereign AI cloud that runs its models in Europe. Page titles are sent to Nscale solely to generate a roast. Nscale does not log request or response content; see the [Nscale Privacy Policy](https://www.nscale.com/policies/privacy-policy) for details.
 
 ## 2. Disclosure of Information
 
@@ -28,4 +28,4 @@ We may update this Privacy Policy from time to time. We will post any changes to
 
 ## 6. Contact Us
 
-If you have any questions about this Privacy Policy or our practices, please contact us at hello@basiliskai.com.
+If you have any questions about this Privacy Policy or our practices, please contact us at hello@meetsquad.ai.
