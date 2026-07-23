@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { theme } from "../stores/theme";
+  import { effectiveTheme as theme } from "../stores/effectiveTheme";
   import { display24HClock } from "../stores/clock";
 
   export let className: string = "";

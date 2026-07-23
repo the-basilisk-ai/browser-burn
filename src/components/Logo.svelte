@@ -1,7 +1,7 @@
 <script lang="ts">
   import logo from "./LogoSvg.svelte";
   import type {Theme} from "../constants/theme";
-  import {theme} from "../stores/theme";
+  import { effectiveTheme as theme } from "../stores/effectiveTheme";
 
   // Create a LogoSvg component and get the markup from it
   // Allows us to use the theme color in the SVG

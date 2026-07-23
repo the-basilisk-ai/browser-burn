@@ -2,7 +2,8 @@
   import {afterUpdate} from "svelte";
   import {isLoading, isStreaming, roast, error} from "../../stores/api";
   import {isTyping} from "../../stores/typewriter";
-  import {theme} from "../../stores/theme";
+  import {pageBackground} from "../../stores/background";
+  import { effectiveTheme as theme } from "../../stores/effectiveTheme";
   import ShareButton from "./ShareButton.svelte";
   import ShareTargets from "./ShareTargets.svelte";
 
@@ -112,7 +113,7 @@
             <div
               bind:this={shareCardElement}
               class="min-w-screen flex items-center justify-center px-5 py-5 rounded-md border"
-              style={`background: linear-gradient(90deg, ${$theme.bgGradientFrom} 0%, ${$theme.bgGradientTo} 100%);`}
+              style:background-color={$pageBackground}
               style:border-color={$theme.bgLoading.light}
             >
               <div

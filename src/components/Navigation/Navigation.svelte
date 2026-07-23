@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { theme } from "../../stores/theme";
+  import { effectiveTheme as theme } from "../../stores/effectiveTheme";
+  import AppearanceMenu from "../AppearanceMenu.svelte";
   import ClockToggle from "../ClockToggle.svelte";
-  import ModeToggle from "../ModeToggle.svelte";
   import NavigationSvg from "./NavigationSvg.svelte";
 
   export let className: string = "";
@@ -27,11 +27,13 @@
 
 <nav class={className} style:color={$theme.textBrand}>
   <div
-    class="flex items-center rounded-md p-2 pl-3 pr-3 space-x-2 h-10"
+    class="flex items-center rounded-md p-2 pl-3 pr-3 space-x-2 h-10 border"
     style:background-color={$theme.bgRoast}
+    style:border-color={$theme.surfaceBorder}
+    style:box-shadow={$theme.surfaceShadow}
   >
-    <ModeToggle className="pr-1" />
     <ClockToggle className="pr-1" />
+    <AppearanceMenu className="pr-1" />
     <div
       class="flex items-center space-x-2 pl-3 border-l-2"
       style:border-color={$theme.navigationDivider}
