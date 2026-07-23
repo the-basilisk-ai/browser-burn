@@ -14,7 +14,7 @@
   "manifest_version": 3,
   "host_permissions": [
     "https://ddzqz505u9.execute-api.eu-west-2.amazonaws.com/prod/burn",
-    "https://nam5v7o2loht7eea6spgacrs640yhmaf.lambda-url.eu-west-2.on.aws/*"
+    "https://nam5v7o2loht7eea6spgacrs640yhmaf.lambda-url.eu-west-2.on.aws/"
   ],
   "permissions": ["history", "storage"],
   "chrome_url_overrides": {
