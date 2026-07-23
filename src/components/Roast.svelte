@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import loadingMessages from "../constants/loadingMessages";
   import { theme } from "../stores/theme";
-  import { isLoading, roast, error } from "../stores/api";
+  import { isLoading, isStreaming, roast, error } from "../stores/api";
   import { getRoast } from "../api/roast";
   import Loading from "./Loading.svelte";
   import Message from "./Message.svelte";
@@ -33,6 +33,8 @@
     <Message text={$error} />
   {:else}
     <Message text={$roast} />
-    <p class="font-bold mt-5">Sincerely, your browsing history</p>
+    {#if !$isStreaming}
+      <p class="font-bold mt-5">Sincerely, your browsing history</p>
+    {/if}
   {/if}
 </div>
