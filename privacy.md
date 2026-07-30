@@ -8,7 +8,7 @@ We do not store or collect any personally identifiable information about our use
 
 The Extension uses local browser storage to save the users' preference for dark/light mode and 12/24 hour clock display. This information is stored locally on a users device, and we do not have access to it.
 
-Roast content is generated using open-weights AI models hosted on [Nscale](https://www.nscale.com/) Serverless Inference, a privacy-respecting sovereign AI cloud that runs its models in Europe. Page titles are sent to Nscale solely to generate a roast. Nscale does not log request or response content; see the [Nscale Privacy Policy](https://www.nscale.com/policies/privacy-policy) for details.
+Roast content is generated using Google's Gemini models on [Google Cloud Vertex AI](https://cloud.google.com/vertex-ai). Page titles are sent to Google solely to generate a roast, and may be processed in any region in which Google operates. Google does not use this content to train or fine-tune its models, but may retain prompts and responses for a limited period, currently up to 90 days, for safety and abuse monitoring. See [Vertex AI abuse monitoring](https://cloud.google.com/vertex-ai/generative-ai/docs/learn/abuse-monitoring) and the [Google Cloud Privacy Notice](https://cloud.google.com/terms/cloud-privacy-notice) for details.
 
 ## 2. Disclosure of Information
 
