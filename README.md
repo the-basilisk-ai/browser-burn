@@ -4,7 +4,7 @@
 
 **Your browsing history has opinions about you. Now it shares them.**
 
-BrowserBurn replaces your new tab with a fresh, personalised roast of your recent browsing. Install it, open a new tab, get roasted. Each burn is written live from your recent page titles and types itself out while you watch. No account, no setup, no mercy.
+BrowserBurn replaces your new tab with a personalised roast of your recent browsing. Install it, open a new tab, get roasted. Each burn is written live from your recent page titles and types itself out while you watch. No account, no setup, no mercy.
 
 > "You refreshed your own pull request like it was a dating app, hoping someone finally approves of you. At least the AI thinks you're worth talking to."
 
