@@ -1,7 +1,7 @@
 {
   "name": "BrowserBurn",
-  "short_name": "BB🌐🔥",
-  "description": "Replaces your new tab page with spicy roasts based on your recent browsing history - a unique and fun way to browse every day!",
+  "short_name": "BrowserBurn",
+  "description": "Your browsing history has opinions about you. Now it shares them. A fresh, personalised roast on every new tab.",
   "version": "1.5.1",
   "author": "Squad",
   "minimum_chrome_version": "104",
