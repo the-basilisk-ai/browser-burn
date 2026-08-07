@@ -31,6 +31,20 @@ const onHistoryResults = async (history: chrome.history.HistoryItem[]) => {
   }
 };
 
+// The API needs to know what day it is: the model otherwise anchors on its
+// training cutoff and reads next month's conference as years away. It has to
+// come from here because the roast should be anchored to the user's calendar
+// day, and only the browser knows that: the request carries page titles and
+// nothing else, so the API would otherwise be left guessing from UTC.
+const localDate = (): string => {
+  const now = new Date();
+  const pad = (n: number) => String(n).padStart(2, "0");
+
+  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(
+    now.getDate()
+  )}`;
+};
+
 const roastHistory = async (
   history: chrome.history.HistoryItem[]
 ): Promise<string> => {
@@ -56,6 +70,7 @@ const streamRoast = async (historyLines: string): Promise<string> => {
     },
     body: JSON.stringify({
       historyLines,
+      localDate: localDate(),
     }),
   });
 
@@ -96,6 +111,7 @@ const bufferedRoast = async (historyLines: string): Promise<string> => {
     },
     body: JSON.stringify({
       historyLines,
+      localDate: localDate(),
     }),
   });
 
