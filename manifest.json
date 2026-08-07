@@ -1,7 +1,7 @@
 {
   "name": "BrowserBurn",
   "short_name": "BrowserBurn",
-  "description": "Your browsing history has opinions about you. Now it shares them. A fresh, personalised roast on every new tab.",
+  "description": "Your browsing history has opinions about you. Now it shares them. Open a new tab, get roasted. No account, no mercy.",
   "version": "1.5.1",
   "author": "Squad",
   "minimum_chrome_version": "104",
